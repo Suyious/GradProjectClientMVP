@@ -1,19 +1,25 @@
 import { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import axios from "../../../utils/axios"
+
+type LoginErrors = {
+	email?: String,
+	password?: String,
+	detail?: String
+}
 
 const Login = (): JSX.Element => {
 
-	const emailref = useRef(null)
-	const passwordref = useRef(null)
-	const [error, setError] = useState({})
+	const emailref = useRef<HTMLInputElement | null>(null)
+	const passwordref = useRef<HTMLInputElement | null>(null)
+	const [error, setError] = useState<LoginErrors>({})
 	const navigate = useNavigate()
 
-	const formsubmit = async (e) => {
+	const formsubmit = async (e: React.SyntheticEvent) => {
 		e.preventDefault()
 		await axios.post('login/', {
-			email: emailref.current.value,
-			password: passwordref.current.value,
+			email: emailref.current ? emailref.current.value : "",
+			password: passwordref.current ? passwordref.current.value : "",
 		}).then( response => {
 			const token = response.data.token;
 			// console.log(token)
@@ -21,9 +27,15 @@ const Login = (): JSX.Element => {
 			localStorage.setItem('refresh', token.refresh)
 			navigate('/')
 		}).catch( error => {
-			console.log("OOPS, recieved an ", error.response.status)
-			console.log(error.response.data)
-			setError(error.response.data)
+			if(error.response){
+				console.log("[ERROR] OOPS, recieved a ", error.response.status)
+				console.log(error.response.data)
+				setError(error.response.data)
+			} else {
+				if(error && error.code === 'ERR_NETWORK'){
+					setError({"detail": error.message })
+				}
+			}
 		})
 	}
 
@@ -31,13 +43,13 @@ const Login = (): JSX.Element => {
 		<div className="login width-wrap">
 			<form onSubmit={formsubmit} className="form-block login-form-block">
 				<label>Email <input ref={emailref} type="email" /></label>
-				{error.email}
+				<div className="form-error">{error.email}</div>
 				<label>Password<input ref={passwordref} type="password" /></label>
-				{error.password}
+				<div className="form-error">{error.password}</div>
 				<button>Login</button>
-				{error.detail}
+				<div className="form-error">{error.detail}</div>
 			</form>
-			<p>Don't have an account? <a href="/signup">Signup</a></p>
+			<p>Don't have an account? <Link to="/user/signup">Signup</Link></p>
 		</div>
 	)
 }

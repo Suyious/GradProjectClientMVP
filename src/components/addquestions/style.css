@@ -1,0 +1,19 @@
+.add-question-form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em
+}
+
+.add-question-form label {
+	display: flex;
+	flex-direction: column;
+}
+
+.add-question-form input, 
+.add-question-form button {
+	padding: 0.5em
+}
+
+.question-option span {
+	margin-right: 0.5em;
+}

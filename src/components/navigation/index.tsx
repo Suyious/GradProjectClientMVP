@@ -1,15 +1,18 @@
+import { NavLink } from 'react-router-dom'
 import "./style.css"
 
-const Navigation = (): JSX.Element => {
+type NavigationProps = {
+	children?: React.ReactNode;
+	logo?: React.ReactNode;
+}
+
+const Navigation = ({ children, logo }: NavigationProps): JSX.Element => {
 	return (
 		<nav className="navigation nav-width-wrap">
 			<div className="navigation-logo">
-				<a href="/"><pre>mvp</pre></a>
+				<NavLink to="/"><pre>{ logo }</pre></NavLink>
 			</div>
-			<ul className="navigation-links">
-				<li><a href="/signup"><pre>signup</pre></a></li>
-				<li><a href="/login"><pre>login</pre></a></li>
-			</ul>
+			{ children }
 		</nav>
 	)
 }

@@ -1,7 +1,7 @@
 .navigation {
 	display: flex;
 	justify-content: space-between;
-	align-item: baseline;
+	align-items: baseline;
 }
 
 .nav-width-wrap {
@@ -10,14 +10,16 @@
 	margin: 0 auto;
 }
 
-.navigation-links {
+.navigation-links,
+.navigation-user {
 	display: flex;
 	list-style: none;
 	gap: 1em
 }
 
 .navigation-links a,
-.navigation-logo a{
+.navigation-logo a,
+.navigation-user a{
 	text-decoration: none;
 	padding: 1em
 }
