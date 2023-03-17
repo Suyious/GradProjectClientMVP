@@ -1,10 +1,12 @@
-import { Outlet, NavLink } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import './App.css'
 import Navigation from './components/navigation'
 import { useUser } from "./hooks/useUser"
 
 function App(): JSX.Element {
 	const [ user ] = useUser()
+
 	return (
 		<div className="App">
 			<Navigation logo='mvp'>
@@ -12,6 +14,12 @@ function App(): JSX.Element {
 					<div className="navigation-user">
 						<NavLink to="/user/me/">
 							<pre>{ user ? user.first_name : "Anonymous" }</pre>
+						</NavLink>
+						<NavLink to="/test/create/">
+							<pre>Join a Test</pre>
+						</NavLink>
+						<NavLink to="/test/create/">
+							<pre>+ New Test</pre>
 						</NavLink>
 					</div>
 				) : (

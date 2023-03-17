@@ -1,0 +1,5 @@
+.upcoming-test-subtitle,
+.upcoming-test-call-to-action {
+    display: flex;
+    justify-content: space-between;
+}

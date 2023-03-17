@@ -1,5 +1,5 @@
 import "./style.css"
-import { Question } from "../addquestions"
+import { Question } from "../../types/question" 
 
 type MCQSelectProp = {
 	question: Question;
@@ -9,12 +9,12 @@ type MCQSelectProp = {
 
 const MCQSelect = ({ question = {
 	serial: 1,
-	statement: "You must provide question in code",
-	option_1: "Provide option_1 in code",
-	option_2: "Provide option_2 in code",
-	option_3: "Provide option_3 in code",
-	option_4: "Provide option_4 in code",
-	answer: "Provide answer in code",
+	statement: "You must provide question",
+	option_1: "Provide option_1",
+	option_2: "Provide option_2",
+	option_3: "Provide option_3",
+	option_4: "Provide option_4",
+	answer: "Provide answer",
 }, answer, setAnswer }: MCQSelectProp) => {
 
 	const selectOption = (option: Number) => {
@@ -27,16 +27,16 @@ const MCQSelect = ({ question = {
 			<div className="mcq-serial">{ question.serial.toString() }</div>
 			<div className="mcq-statement">{ question.statement }</div>
 			<ul className="mcq-options">
-				<li className="mcq-option" onClick = {() => selectOption(1)}>
+				<li className={`mcq-option${answer === 1 ? " selected": ""}`} onClick = {() => selectOption(1)}>
 					<span className="mcq-option-no">1</span>{ question.option_1 }
 				</li>
-				<li className="mcq-option" onClick = {() => selectOption(2)}>
+				<li className={`mcq-option${answer === 2 ? " selected": ""}`} onClick = {() => selectOption(2)}>
 					<span className="mcq-option-no">2</span>{ question.option_2 }
 				</li>
-				<li className="mcq-option" onClick = {() => selectOption(3)}>
+				<li className={`mcq-option${answer === 3 ? " selected": ""}`} onClick = {() => selectOption(3)}>
 					<span className="mcq-option-no">3</span>{ question.option_3 }
 				</li>
-				<li className="mcq-option" onClick = {() => selectOption(4)}>
+				<li className={`mcq-option${answer === 4 ? " selected": ""}`} onClick = {() => selectOption(4)}>
 					<span className="mcq-option-no">4</span>{ question.option_4 }
 				</li>
 			</ul>

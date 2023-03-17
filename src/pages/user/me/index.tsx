@@ -4,7 +4,7 @@ import useUser from '../../../hooks/useUser'
 
 const Me = (): JSX.Element => {
 
-	const [ user, logout ] = useUser()
+	const [ user, _isLoading ,logout ] = useUser()
 	const navigate = useNavigate()
 
 	const logUserOut = () => {

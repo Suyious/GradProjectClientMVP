@@ -1,15 +1,6 @@
 import { useRef, useState } from "react"
+import { Question } from "../../types/question";
 import "./style.css"
-
-export type Question = {
-	serial: Number;
-	statement: String;
-	option_1: String;
-	option_2: String;
-	option_3: String;
-	option_4: String;
-	answer: String;
-}
 
 type QuestionError = {
 	statement?: String;
@@ -54,36 +45,38 @@ export const AddQuestions = ({ questions, setQuestions }: AddQuestionProp) => {
 
 	const formsubmit = (e: React.SyntheticEvent) => {
 		e.preventDefault()
+
+		if(!statementref.current || !option_1ref.current
+			|| !option_2ref.current || !option_3ref.current
+			|| !option_4ref.current || !answerref.current)
+		return
+
+		const empty:QuestionError = {}
+		if(statementref.current.value.length === 0)
+			empty["statement"] = `This Field must not be Empty`
+		if(option_1ref.current.value.length === 0)
+			empty["option_1"] = `This Field must not be Empty`
+		if(option_2ref.current.value.length === 0)
+			empty["option_2"] = `This Field must not be Empty`
+		if(option_3ref.current.value.length === 0)
+			empty["option_3"] = `This Field must not be Empty`
+		if(option_4ref.current.value.length === 0)
+			empty["option_4"] = `This Field must not be Empty`
+		if(answerref.current.value.length === 0)
+			empty["answer"] = `This Field must not be Empty`
+		setErrors(empty)
+		if(Object.keys(empty).length !== 0) return
+
 		const newquestion:Question = {
 			serial: questions.length + 1,
-			statement: statementref.current ? statementref.current.value : "",
-			option_1: option_1ref.current ? option_1ref.current.value : "",
-			option_2: option_2ref.current ? option_2ref.current.value : "",
-			option_3: option_3ref.current ? option_3ref.current.value : "",
-			option_4: option_4ref.current ? option_4ref.current.value : "",
-			answer: answerref.current ? answerref.current.value : ""
+			statement: statementref.current.value,
+			option_1: option_1ref.current.value,
+			option_2: option_2ref.current.value,
+			option_3: option_3ref.current.value,
+			option_4: option_4ref.current.value,
+			answer: answerref.current.value,
 		}
-		const empty:QuestionError = {}
-		if(newquestion["statement"].length === 0){
-			empty["statement"] = `This Field must not be Empty`
-		}
-		if(newquestion["option_1"].length === 0){
-			empty["option_1"] = `This Field must not be Empty`
-		}
-		if(newquestion["option_2"].length === 0){
-			empty["option_2"] = `This Field must not be Empty`
-		}
-		if(newquestion["option_3"].length === 0){
-			empty["option_3"] = `This Field must not be Empty`
-		}
-		if(newquestion["option_4"].length === 0){
-			empty["option_4"] = `This Field must not be Empty`
-		}
-		if(newquestion["answer"].length === 0){
-			empty["answer"] = `This Field must not be Empty`
-		}
-		setErrors(empty)
-		if(Object.keys(empty).length === 0) pushQuestion(newquestion)
+		pushQuestion(newquestion)
 	}
 
 	return (
@@ -106,7 +99,9 @@ export const AddQuestions = ({ questions, setQuestions }: AddQuestionProp) => {
 			{ questions && questions.map((question) => {
 				return (
 					<div className="question-block" key={question.serial as React.Key}>	
-						<h3 className="question-statement"><span className="question-no">{question.serial.toString()}</span>{question.statement}</h3>
+						<h3 className="question-statement">
+							<span className="question-no">{question.serial.toString()}</span>{question.statement}
+						</h3>
 						<p className="question-option option_1"><span>A</span>{question.option_1}</p>
 						<p className="question-option option_2"><span>B</span>{question.option_2}</p>
 						<p className="question-option option_3"><span>C</span>{question.option_3}</p>
@@ -119,5 +114,3 @@ export const AddQuestions = ({ questions, setQuestions }: AddQuestionProp) => {
 		</div>
 	)
 }
-
-// export default AddQuestions

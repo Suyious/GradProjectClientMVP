@@ -1,17 +1,11 @@
 import { useState, useEffect } from 'react'
 import axios from '../utils/axios'
+import { User } from '../types/user'
 
-export type User = {
-	id: Number;
-	first_name: String;
-	last_name: String;
-	email: String;
-	username: String;
-}
-
-export const useUser = (): [ User | null, (callback: () => void) => void] => {
+export const useUser = (): [ User | null, Boolean, (callback: () => void) => void] => {
 	
 	const [user, setUser] = useState<User | null>(null)
+	const [isLoading, setIsLoading] = useState<Boolean>(true)
 	
 	const refresh = async (token: { access: String | null, refresh: String | null}) => {
 		await axios.post('api/token/refresh/', {
@@ -20,10 +14,11 @@ export const useUser = (): [ User | null, (callback: () => void) => void] => {
 			localStorage.setItem('access', response.data.access)
 			auth()
 		} ).catch( error => {
+			setIsLoading(false)
+			setUser(null)
 			if(error && error.response){
 				console.log("OOPS, recieved a ", error.response.status)
 				console.log(error.response.data)
-				setUser(null)
 			} else {
 				console.log("[ERROR] ", error)
 			}
@@ -39,6 +34,7 @@ export const useUser = (): [ User | null, (callback: () => void) => void] => {
 			headers: { "Authorization": `Bearer ${token.access}` }
 		}).then( response => {
 			// console.log(response.data)
+			setIsLoading(false)
 			setUser(response.data)
 		}).catch( error => {
 			if(error.response && error.response.status === 401) {
@@ -58,7 +54,7 @@ export const useUser = (): [ User | null, (callback: () => void) => void] => {
 		auth()
 	}, [])
 
-	return [ user, logout ]
+	return [ user, isLoading ,logout ]
 }
 
 export default useUser
