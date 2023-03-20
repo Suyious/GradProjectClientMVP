@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import BCSP064Logo from '../../modules/logo';
 import "./style.css"
 
 type NavigationProps = {
@@ -6,11 +7,11 @@ type NavigationProps = {
 	logo?: React.ReactNode;
 }
 
-const Navigation = ({ children, logo }: NavigationProps): JSX.Element => {
+const Navigation = ({ children, logo = <BCSP064Logo/> }: NavigationProps): JSX.Element => {
 	return (
 		<nav className="navigation nav-width-wrap">
 			<div className="navigation-logo">
-				<NavLink to="/"><pre>{ logo }</pre></NavLink>
+				<NavLink to="/">{ logo }</NavLink>
 			</div>
 			{ children }
 		</nav>

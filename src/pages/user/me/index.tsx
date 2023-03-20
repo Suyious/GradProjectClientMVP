@@ -1,16 +1,18 @@
-import { MouseEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useUser from '../../../hooks/useUser'
+import { logout, setAuthStateUser } from '../../../app/features/auth/authSlice'
+import { useAppDispatch } from '../../../app/hooks'
+import { useGetUserQuery } from '../../../app/services/api/authApi'
 
 const Me = (): JSX.Element => {
 
-	const [ user, _isLoading ,logout ] = useUser()
+	const { refetch, data: user } = useGetUserQuery()
 	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
 
 	const logUserOut = () => {
-		logout(() => {
-			navigate("/")
-		})
+		dispatch(logout())
+		refetch()
+		navigate('/user/login/')
 	}
 
 	return (

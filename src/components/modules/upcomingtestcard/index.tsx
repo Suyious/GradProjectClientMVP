@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { CountDown } from "../countdown";
-import { MockTest } from "../../types/mocktest";
+import { MockTest } from "../../../types/mocktest";
 import "./style.css"
 
 type TestCardProp = {

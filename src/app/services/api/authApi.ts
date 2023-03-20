@@ -25,6 +25,10 @@ interface SignupRequest {
 
 export const authApi = rootApi.injectEndpoints({
     endpoints: (builder) => ({
+        getUser: builder.query<User, void>({
+            query: () => "me/",
+            providesTags: ['User']
+        }),
         login: builder.mutation<LoginResponse, LoginRequest>({
             query: (body) => ({
                 url: 'login/',
@@ -34,26 +38,37 @@ export const authApi = rootApi.injectEndpoints({
             onQueryStarted: async (id, { getState, dispatch, queryFulfilled}) => {
                 try {
                     const { data } = await queryFulfilled
-                    console.log(data)
+                    // console.log(data)
                     localStorage.setItem("refresh", data.token.refresh)
                     const user = (getState() as RootState).auth.user
                     dispatch(setAuthState({ user, token: data.token.access }))
-                    console.log("Received", data)
+                    // console.log("Received", data)
                 } catch (error) {
                     console.log("Error", error)
                 }
-            }
+            },
+            invalidatesTags: ['User']
         }),
         signup: builder.mutation<LoginResponse, SignupRequest>({
             query: (body) => ({
                 url: 'signup/',
                 method: 'POST',
                 body
-            })
+            }),
+            onQueryStarted: async (id, { getState, dispatch, queryFulfilled}) => {
+                try {
+                    const { data } = await queryFulfilled
+                    // console.log(data)
+                    localStorage.setItem("refresh", data.token.refresh)
+                    const user = (getState() as RootState).auth.user
+                    dispatch(setAuthState({ user, token: data.token.access }))
+                    // console.log("Received", data)
+                } catch (error) {
+                    console.log("Error", error)
+                }
+            },
+            invalidatesTags: ['User']
         }),
-        getUser: builder.query<User, void>({
-            query: () => "me/"
-        })
     }),
 })
 

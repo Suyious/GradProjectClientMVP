@@ -7,8 +7,9 @@ const TestDetail = () => {
     const { data, error, isLoading } = useGetTestByIdQuery(id || "");
 
     return (
-        <div className="test-detail width-wrap">{
-            !isLoading && data? data.name : "error"}</div>
+        <div className="test-detail width-wrap">
+            {!isLoading && data? data.name: "error"}
+        </div>
     )
 }
 

@@ -1,4 +1,4 @@
-import { TestCard } from "../../components/upcomingtestcard"
+import { TestCard } from "../../components/modules/upcomingtestcard"
 import { useGetAllTestsQuery } from "../../app/services/api/mocktestApi";
 
 const Test = () => {
@@ -9,8 +9,8 @@ const Test = () => {
         <div className="mock-test-pages-root width-wrap">
             Your Tests Yo:
 			{ !isLoading && data? data.map((test, i) => (
-				<TestCard/>
-			)) : `Error yo: ${error}` }
+				<TestCard key={test.id} test={test}/>
+			)) : error && 'status' in error && 'error' in error && error.error }
         </div>
     )
 }

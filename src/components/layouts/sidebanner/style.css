@@ -1,0 +1,9 @@
+.side-banner-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.side-banner-layout-centered {
+    text-align: center;
+}

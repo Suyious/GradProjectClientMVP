@@ -1,6 +1,10 @@
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from "@reduxjs/toolkit/dist/query/react";
-import { AuthState, logout, setAuthState } from "../../features/auth/authSlice";
+import { logout, setAuthState } from "../../features/auth/authSlice";
 import { RootState } from "../../store";
+
+interface RefreshResultData {
+    access: string | null
+}
 
 const baseQueryWithReAuth:BaseQueryFn<
     string | FetchArgs,
@@ -12,14 +16,13 @@ const baseQueryWithReAuth:BaseQueryFn<
 
     if (result.error && result.error.status === 401) {
         const refreshResult = await baseQuery({
-            url: '/api/token/refresh',
+            url: '/api/token/refresh/',
             method: 'POST',
             body: { "refresh": refresh }
         }, api, extraOptions)
-        console.log("refresh results")
         if (refreshResult.data) {
             const user = (api.getState() as RootState).auth.user
-            api.dispatch(setAuthState({token: (refreshResult.data as AuthState).token, user}))
+            api.dispatch(setAuthState({token: (refreshResult.data as RefreshResultData).access, user}))
             result = await baseQuery(args, api, extraOptions)
         } else {
             api.dispatch(logout())

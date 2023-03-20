@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { AddQuestions } from "../../../components/addquestions"
+import { AddQuestions } from "../../../components/modules/addquestions"
 import { Question } from "../../../types/question";
 
 const TestCreate = () => {

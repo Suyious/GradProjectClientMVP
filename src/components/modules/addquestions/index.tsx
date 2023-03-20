@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { Question } from "../../types/question";
+import { Question } from "../../../types/question";
 import "./style.css"
 
 type QuestionError = {

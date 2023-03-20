@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { useSignupMutation } from '../../../app/services/api/authApi'
 import axios from "../../../utils/axios"
 
 type SignupErrors = {
@@ -23,6 +24,7 @@ const Signup = (): JSX.Element => {
 
 	const [error, setError] = useState<SignupErrors>({})
 	const navigate = useNavigate()
+	const [ signup, { isLoading }] = useSignupMutation()
 
 	const formsubmit = async (e: React.SyntheticEvent) => {
 		e.preventDefault()
@@ -31,26 +33,37 @@ const Signup = (): JSX.Element => {
 			setError({ password: "passwords must match" })
 			return
 		}
-		await axios.post('signup/', {
-			email: emailref.current?.value,
-			first_name: first_nameref.current?.value,
-			last_name: last_nameref.current?.value,
-			username: usernameref.current?.value,
-			password: passwordref.current?.value,
-		}).then( response => {
-			console.log(response.data)
-			navigate('/login')
+		// await axios.post('signup/', {
+		// 	email: emailref.current?.value,
+		// 	first_name: first_nameref.current?.value,
+		// 	last_name: last_nameref.current?.value,
+		// 	username: usernameref.current?.value,
+		// 	password: passwordref.current?.value,
+		// }).then( response => {
+		// 	console.log(response.data)
+		// 	navigate('/login')
+		// }).catch( error => {
+		// 	if(error.response){
+		// 		console.log("[ERROR] OOPS, recieved a ", error.response.status)
+		// 		console.log(error.response.data)
+		// 		setError(error.response.data)
+		// 	} else {
+		// 		if(error && error.code === 'ERR_NETWORK'){
+		// 			setError({"detail": error.message })
+		// 		}
+		// 	}
+		// } )
+		await signup({
+			email: emailref.current?.value || "",
+			first_name: first_nameref.current?.value || "", 
+			last_name: last_nameref.current?.value || "",
+			username: usernameref.current?.value || "",
+			password: passwordref.current?.value || "",
+		}).unwrap().then(() => {
+			navigate('/')
 		}).catch( error => {
-			if(error.response){
-				console.log("[ERROR] OOPS, recieved a ", error.response.status)
-				console.log(error.response.data)
-				setError(error.response.data)
-			} else {
-				if(error && error.code === 'ERR_NETWORK'){
-					setError({"detail": error.message })
-				}
-			}
-		} )
+			setError(error.data)
+		})
 	}
 
 	return (

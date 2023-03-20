@@ -1,10 +1,10 @@
 import "./style.css"
-import { Question } from "../../types/question" 
+import { Question } from "../../../types/question" 
 
 type MCQSelectProp = {
 	question: Question;
-	answer: Number;
-	setAnswer: React.Dispatch<React.SetStateAction<Number>>;
+	answer: number;
+	setAnswer: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const MCQSelect = ({ question = {
@@ -17,7 +17,7 @@ const MCQSelect = ({ question = {
 	answer: "Provide answer",
 }, answer, setAnswer }: MCQSelectProp) => {
 
-	const selectOption = (option: Number) => {
+	const selectOption = (option: number) => {
 		if(answer !== option) setAnswer(option);
 		else setAnswer(0)
 	}

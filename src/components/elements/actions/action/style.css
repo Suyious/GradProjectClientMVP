@@ -1,0 +1,19 @@
+.action-body.fill {
+    background: var(--button-fill-primary);
+    border: var(--button-border-primary);
+    color: var(--button-foreground-primary);
+    border-radius: 5px;
+}
+
+.action-body.transparent {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--link-foreground-primary);
+}
+
+.action-body.stroke {
+    background: transparent;
+    border: var(--button-border-primary);
+    color: var(--link-foreground-primary);
+    border-radius: 5px
+}

@@ -1,0 +1,18 @@
+.project-logo {
+    display: flex;
+    align-items: center;
+}
+
+.project-logo h1{
+    font-size: 1em;
+    color: #000;
+}
+
+.project-logo h1 span {
+    color: var(--button-fill-primary);
+}
+
+.project-logo img {
+    width: 3em;
+    height: auto;
+}

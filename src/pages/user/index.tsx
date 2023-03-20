@@ -1,11 +1,11 @@
 import "./style.css"
 import { Outlet } from 'react-router-dom'
-import  Navigation from "../../components/navigation"
+import  Navigation from "../../components/layouts/navigation"
 
 const User = () => {
 	return (
 		<>
-			<Navigation logo='mvp'/>
+			<Navigation/>
 			<Outlet/>
 		</>
 	)

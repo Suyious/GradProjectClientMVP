@@ -3,11 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/ignou.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;700;800&display=swap" rel="stylesheet"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mock Test MVP</title>
   </head>
+  <style>
+    body {
+      background: #E9F1F0;
+    }
+    .root_splash {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: fade-in 500ms ease-in;
+    }
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+      } 100% {
+        opacity: 1;
+      }
+    }
+    </style>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="root_splash">
+        <img src="/favicon.png" alt="BCSP064">
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
