@@ -1,0 +1,9 @@
+.input-strip {
+    outline: none;
+    background: none;
+    border: none;
+}
+
+.input-element {
+    width: 100%;
+}

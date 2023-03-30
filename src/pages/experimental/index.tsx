@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Input } from "../../components/elements/inputs/input"
 import MCQSelect from "../../components/modules/mcqselect"
 
 const ExperimentalMCQSelect = () => {
@@ -23,7 +24,8 @@ const Experimental = () => {
 
 	return (
 		<div className="experimental width-wrap">
-			These Components are Experimental.
+			<div>These Components are Experimental.</div>
+			<Input type="email" placeholder="hello@friend.com" label="Email"/>
 		</div>
 	)
 }

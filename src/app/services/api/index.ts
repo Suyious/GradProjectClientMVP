@@ -32,7 +32,7 @@ const baseQueryWithReAuth:BaseQueryFn<
 }
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:8000/',
+    baseUrl: import.meta.env.VITE_API_BASE_URL,
     // credentials: "include",
     prepareHeaders: ( headers, { getState }) => {
         const token = (getState() as RootState).auth.token
