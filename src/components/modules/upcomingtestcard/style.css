@@ -1,4 +1,18 @@
-.upcoming-test-subtitle,
+.upcoming-test-subtitle {
+    display: flex;
+    gap: 1em;
+}
+
+.upcoming-test-title {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+.upcoming-test-author {
+    color: var(--accent-primary);
+}
+
 .upcoming-test-call-to-action {
     display: flex;
     justify-content: space-between;

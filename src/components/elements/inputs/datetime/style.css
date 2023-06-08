@@ -1,0 +1,51 @@
+.datetime_inputs {
+    display: flex;
+    gap: 1em;
+}
+
+.datetime_head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.datetime_error {
+  font-size: 0.9em;
+  color: crimson;
+}
+
+.datetime_input_date,
+.datetime_input_time {
+  display: flex;
+  border: var(--button-border-primary);
+  border-radius: 5px;
+  padding: 0 0.3em 0 1em;
+}
+
+.datetime_inputs input[type=number] {
+  border: none;
+  outline: none;
+  background: transparent;
+
+  padding: 1em 0;
+  width: 100%;
+}
+
+.datetime_input_meridian {
+  border: none;
+  outline: none;
+  background: transparent;
+
+  padding: 1em;
+  width: 100%;
+}
+
+.datetime_input_meridian option {
+  width: 2em;
+}
+
+.datetime_inputs input[type=number]::-webkit-inner-spin-button, 
+.datetime_inputs input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+  opacity: 0;
+}

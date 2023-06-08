@@ -1,11 +1,15 @@
+import "./style.css"
 import { useState, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useLoginMutation } from '../../../app/services/api/authApi'
+import Container from "../../../components/layouts/container"
+import { Input } from "../../../components/elements/inputs/input"
+import { Button } from "../../../components/elements/actions/buttons"
 
 type LoginErrors = {
-	email?: String,
-	password?: String,
-	detail?: String
+	email?: string,
+	password?: string,
+	detail?: string
 }
 
 const Login = (): JSX.Element => {
@@ -37,17 +41,15 @@ const Login = (): JSX.Element => {
 
 
 	return (
-		<div className="login width-wrap">
+		<Container.Flex direction="column" style={{ height: "100%"}} className="login-body width-wrap">
 			<form onSubmit={formsubmit} className="form-block login-form-block">
-				<label>Email <input ref={emailref} type="email" /></label>
-				<div className="form-error">{error.email}</div>
-				<label>Password<input ref={passwordref} type="password" /></label>
-				<div className="form-error">{error.password}</div>
-				<button disabled={isLoading}>{ isLoading? "Logging you in...": "Login" }</button>
+				<Input label="Email" placeholder="email" type="email" ref={emailref} error={error.email}/>
+				<Input label="Password" placeholder="password" type="password" ref={passwordref} error={error.password}/>
+				<Button disabled={isLoading} style={{ padding: "0.8em 2em", cursor: "pointer"}}>{ isLoading? "Logging you in...": "Login" }</Button>
 				<div className="form-error">{error.detail}</div>
 			</form>
-			<p>Don't have an account? <Link to="/user/signup">Signup</Link></p>
-		</div>
+			<p className="form-subtext">Don't have an account? <Link to="/user/signup">Signup</Link></p>
+		</Container.Flex>
 	)
 }
 

@@ -3,3 +3,9 @@
 	width: 500px;
 	margin: 0 auto;
 }
+
+.flat-width-wrap {
+	max-width: 90vw;
+	width: 1080px;
+	margin: 0 auto;
+}

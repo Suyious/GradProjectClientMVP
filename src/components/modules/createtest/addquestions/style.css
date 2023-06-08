@@ -1,0 +1,27 @@
+.add_question_panel_body {
+    display: flex;
+}
+
+.add_question_panel_left {
+    flex: 1;
+}
+
+.add_question_panel_right {
+    width: 300px;
+}
+
+.add_question_panel_page_nav {
+    display: flex;
+    gap: 1em;
+}
+
+.add_question_back_to_create {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.addquestion_back_head_name {
+    font-size: 1.2em;
+    font-weight: 500;
+}

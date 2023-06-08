@@ -3,3 +3,7 @@
 	outline: none;
 	border: none;
 }
+
+.button-body:disabled .action-body {
+	filter: opacity(0.9);
+}

@@ -8,10 +8,14 @@
 :root {
 	--background-primary: #F7FCFF;
 	--foreground-primary: #000000;
-	--button-fill-primary: #0076AF;
+	--background-secondary: #fff;
+	--accent-primary: #0076AF;
+	--button-fill-primary: var(--accent-primary);
 	--button-stroke-primary: #0072AA;
 	--button-foreground-primary: var(--background-primary);
 	--button-border-primary: 2px solid var(--button-stroke-primary);
+	--shadow-primary: 4px 4px 35px rgba(0, 0, 0, 0.05);	
+	--card-border-primary: 1px solid #DCE9F0;
 	--link-foreground-primary: var(--button-fill-primary);
 	--accent-background-primary: #3FADE333;
 	--input-fill-primary: var(--accent-background-primary);
@@ -20,12 +24,12 @@
 
 	--font-family-primary: 'Open Sans', 'Helvetica';
 
-	font-size: 17px;
+	/* font-size: 17px; */
 }
 
 @media screen and (max-width: 600px) {
 	:root {
-		font-size: 14px;
+		/* font-size: 14px; */
 	}
 }
 

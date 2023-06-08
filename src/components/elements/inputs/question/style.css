@@ -1,0 +1,21 @@
+.question_input_input {
+    display: flex;
+    gap: 1em;
+}
+
+.question_input_input_box {
+    flex: 1;
+    outline: none;
+    background: transparent;
+    border: none;
+}
+
+.question_input_answer_checkbox {
+    width: 1em;
+    height: 1em;
+    border: 1px solid #000;
+}
+
+.question_input_answer_checkbox.checked {
+    background: green;
+}

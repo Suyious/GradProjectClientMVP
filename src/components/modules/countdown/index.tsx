@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 
 type CountDownProps = {
-	to?: string | null
+	to?: string | null,
+	realtime?: boolean,
+	variant?: "stylized" | "plain",
 }
 
 export const COUNTDOWN_DEAD = "00:00:00:00"
@@ -21,12 +23,12 @@ export function getTimeRemaining(endtime: string) {
 }
 
 // to = new Date('2024-06-21T00:00:00.000Z')
-export const CountDown = ({ to = null } : CountDownProps) => {
+export const CountDown = ({ to = null, realtime = true, variant = "plain" } : CountDownProps) => {
 
-	const [ time_to, setTime_to ] = useState<String>(to ? getTimeRemaining(to): COUNTDOWN_DEAD);
+	const [ time_to, setTime_to ] = useState<string>(to ? getTimeRemaining(to): COUNTDOWN_DEAD);
 
 	useEffect(() => {
-		if(to) {
+		if(to && realtime) {
 			let interval:NodeJS.Timer = setInterval(() => {
 				const tt = getTimeRemaining(to)
 				if(tt === COUNTDOWN_DEAD) {

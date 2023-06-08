@@ -1,16 +1,18 @@
 import { useState, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useSignupMutation } from '../../../app/services/api/authApi'
-import axios from "../../../utils/axios"
+import { Input } from '../../../components/elements/inputs/input'
+import { Button } from '../../../components/elements/actions/buttons'
+import Container from '../../../components/layouts/container'
 
 type SignupErrors = {
-	first_name?: String,
-	last_name?: String,
-	username?: String,
-	email?: String,
-	password?: String,
-	confirmpassword?: String,
-	detail?: String
+	first_name?: string,
+	last_name?: string,
+	username?: string,
+	email?: string,
+	password?: string,
+	confirmpassword?: string,
+	detail?: string
 }
 
 const Signup = (): JSX.Element => {
@@ -33,6 +35,7 @@ const Signup = (): JSX.Element => {
 			setError({ password: "passwords must match" })
 			return
 		}
+
 		// await axios.post('signup/', {
 		// 	email: emailref.current?.value,
 		// 	first_name: first_nameref.current?.value,
@@ -53,6 +56,7 @@ const Signup = (): JSX.Element => {
 		// 		}
 		// 	}
 		// } )
+
 		await signup({
 			email: emailref.current?.value || "",
 			first_name: first_nameref.current?.value || "", 
@@ -67,24 +71,19 @@ const Signup = (): JSX.Element => {
 	}
 
 	return (
-		<div className="signup width-wrap">
+		<Container.Flex direction="column" style={{ height: "100%"}} className="signup width-wrap">
 			<form onSubmit={formsubmit} className="form-block signup-form-block">
-				<label>First Name<input ref={first_nameref} type="text" /></label>
-				{error.first_name}
-				<label>Last Name<input ref={last_nameref} type="text" /></label>
-				{error.last_name}
-				<label>Email <input ref={emailref} type="email" /></label>
-				{error.email}
-				<label>Username<input ref={usernameref} type="username" /></label>
-				{error.username}
-				<label>Password<input ref={passwordref} type="password" /></label>
-				{error.password}
-				<label>Confirm Password<input ref={confirmpasswordref} type="password" /></label>
-				<button>Signup</button>
+				<Input label="First Name" ref={first_nameref} type="text" placeholder="First Name" error={error.first_name}/>
+				<Input label="Last Name" ref={last_nameref} type="text" placeholder="Last Name" error={error.last_name}/>
+				<Input label="Email" ref={emailref} type="email" placeholder="Email" error={error.email}/>
+				<Input label="Username" ref={usernameref} type="text" placeholder="Username" error={error.username}/>
+				<Input label="Password" ref={passwordref} type="password" placeholder="Password" error={error.password}/>
+				<Input label="Confirm Password" ref={confirmpasswordref} type="password" placeholder="Confirm Password"/>
+				<Button disabled={isLoading}>Signup</Button>
 				<div className="form-error">{error.detail}</div>
 			</form>
-			<p>Already have an account? <Link to="/user/login">Login</Link></p>
-		</div>
+			<p className='form-subtext'>Already have an account? <Link to="/user/login">Login</Link></p>
+		</Container.Flex>
 	)
 }
 

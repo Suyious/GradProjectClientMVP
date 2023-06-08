@@ -1,0 +1,31 @@
+.textbox-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.textbox-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.textbox-error {
+    font-size: 0.9em;
+    color: crimson;
+}
+
+
+.textbox-textarea {
+    outline: none;
+    border: none;
+    background: transparent;
+    width: 100%;
+    resize: none;
+}
+
+.textbox-textarea.stroke {
+    border: 1px solid black;
+    border-radius: 5px;
+    min-height: 200px;
+    padding: 1em;
+}

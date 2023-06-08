@@ -4,6 +4,30 @@
     border: none;
 }
 
+.input-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.input-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-error-body {
+    font-size: 0.9em;
+    color: crimson;
+}
+
 .input-element {
     width: 100%;
+    padding: 0.8em 2em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.input-body.stroke input{
+    border: 1px solid var(--button-stroke-primary)
 }

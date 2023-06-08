@@ -1,13 +1,16 @@
-import { Link } from "react-router-dom";
-import { CountDown } from "../countdown";
+import { CountDown, getTimeRemaining } from "../countdown";
+import { DateToMomentsAgo } from "../../../utils/moments";
 import { MockTest } from "../../../types/mocktest";
 import "./style.css"
+import { Link } from "../../elements/actions/links";
+import TestIcon from "../../../assets/icons/testicon";
+import Container from "../../layouts/container";
 
 type TestCardProp = {
     test?: MockTest | null;
 }
 
-const extractDuration:(duration: String) => { 
+const extractDuration:(duration: string) => { 
     hours: number, minutes: number, seconds: number
 } = (duration) => {
 
@@ -25,26 +28,30 @@ export const TestCard = ({ test = null }: TestCardProp) => {
     let endsAt = null;
     if(test) {
         const duration = extractDuration(test.duration)
-        endsAt = new Date(test.starts_at.getTime() + duration.hours * 60 * duration.minutes * 60 * duration.seconds * 60 * 1000).toISOString();
+        endsAt = new Date(new Date(test.starts_at).getTime() + duration.hours * 60 * duration.minutes * 60 * duration.seconds * 60 * 1000).toISOString();
     }
+    console.log(test);
 
     return (
-        <section className="upcoming-test-card">
+        <Container.Card variant="fill-shadow" className="upcoming-test-card" style={{ maxWidth: "600px"}}>
+            <section className="upcoming-test-subtitle">
+                <p className="upcoming-test-author">{test ? test.author.first_name + " " + test.author.last_name : <span>Unspecified</span>}</p>
+                <p className="upcoming-test-created">{test ? DateToMomentsAgo(new Date(test.created_at)) : <span>Unspecified</span>}</p>
+            </section>
             <header className="upcoming-test-title">
+                <TestIcon/>
                 <h2>{test ? test.name : <span>Untitled Test</span>}</h2>
             </header>
-            <section className="upcoming-test-subtitle">
-                <p className="upcoming-test-created">{test ? test.created_at.getFullYear() + " " + (test.created_at.getMonth() + 1) : <span>Unspecified</span>}</p>
-                <p className="upcoming-test-author">{test ? test.author : <span>Unspecified</span>}</p>
-            </section>
-            <details className="upcoming-test-description">
-                <summary>{test ? test.description.substring(0, 255) + " ..." : <span>No Description</span>}</summary>
-                { test && <p>{test.description}</p> }
-            </details>
+            <p className="upcoming-test-description">
+                {test ? test.description.length > 255 ? test.description.substring(0, 255) + " ...": test.description : <span>No Description</span>}
+            </p>
             <section className="upcoming-test-call-to-action">
-                <CountDown to = {endsAt} />
-                <Link to="#" className="upcoming-test-call-to-action-button">Register</Link>
+                <div className="upcoming-test-coundown-wrapper">
+                    starts in
+                    <CountDown to = {endsAt} />
+                </div>
+                <Link to={`/test/${test?.id}`} variant="fill" style={{ paddingInline : "4em"}}>Register Now</Link>
             </section>
-        </section>
+        </Container.Card>
     )
 }

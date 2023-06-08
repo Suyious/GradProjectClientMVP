@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Input } from "../../components/elements/inputs/input"
 import MCQSelect from "../../components/modules/mcqselect"
+import Container from "../../components/layouts/container"
 
 const ExperimentalMCQSelect = () => {
 
@@ -23,10 +24,9 @@ const ExperimentalMCQSelect = () => {
 const Experimental = () => {
 
 	return (
-		<div className="experimental width-wrap">
-			<div>These Components are Experimental.</div>
-			<Input type="email" placeholder="hello@friend.com" label="Email"/>
-		</div>
+		<Container.Flex style={{ height: "100vh"}} className="experimental width-wrap">
+			<Input type="email" placeholder="hello@friend.com" label="Email" error="Give Error Bro!"/>
+		</Container.Flex>
 	)
 }
 

@@ -1,0 +1,32 @@
+.duration_input_main {
+    display: flex;
+    border: var(--button-border-primary);
+    border-radius: 5px;
+    padding: 0 1em;
+    width: fit-content;
+}
+
+.duration_input_head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.duration_input_error {
+  font-size: 0.9em;
+  color: crimson;
+}
+
+.duration_input_main input[type=number] {
+    border: none;
+    outline: none;
+    background: transparent;
+
+    padding: 1em 0;
+    max-width: 8em;
+}
+.duration_input_main input[type=number]::-webkit-inner-spin-button, 
+.duration_input_main input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+  opacity: 0;
+}

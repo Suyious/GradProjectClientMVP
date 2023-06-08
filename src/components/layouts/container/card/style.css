@@ -1,0 +1,7 @@
+.container_card_body.fill-shadow {
+    padding: 1em 2em;
+    background: var(--background-secondary);
+    border: var(--card-border-primary);
+    box-shadow: var(--shadow-primary);
+    border-radius: 4px;
+}
