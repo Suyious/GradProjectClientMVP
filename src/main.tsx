@@ -14,9 +14,7 @@ import Experimental from "./pages/experimental"
 import Test from './pages/test'
 import TestCreate from "./pages/test/create"
 import TestDetail from './pages/test/[id]'
-import { QuestionCreate } from './pages/test/[id]/question/create'
-import { QuestionRespond } from './pages/test/[id]/question/[id]'
-import { TestQuestions } from './pages/test/[id]/question'
+import TestJoin from './pages/test/join'
 
 const NotFound404 = () => <h1>Not Found</h1>
 
@@ -29,10 +27,8 @@ const router = createBrowserRouter([
 			{ path: "/", element: <Home/>, },
 			{ path: "test/", element: <Test/>},
 			{ path: "test/create/", element: <TestCreate/>},
+			{ path: "test/join/", element: <TestJoin/>},
 		   	{ path: "test/:id/", element: <TestDetail/> },
-		   	{ path: "test/:id/question", element: <TestQuestions/> },
-		   	{ path: "test/:id/question/create", element: <QuestionCreate/> },
-		   	{ path: "test/:id/question/:id", element: <QuestionRespond/> },
 		]
 	},{
 		path: "user/",

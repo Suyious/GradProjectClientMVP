@@ -6,6 +6,9 @@ import { Button } from "../../../elements/actions/buttons";
 import QuestionInput from "../../../elements/inputs/question";
 import TextBox from "../../../elements/inputs/textbox";
 import { Question } from "../../../../types/question";
+import { useState } from "react";
+import { useCreateNewTestMutation } from "../../../../app/services/api/mocktestApi";
+import { useNavigate } from "react-router-dom";
 
 type AddQuestionsPanelProps = {
     test: Test | {},
@@ -14,9 +17,45 @@ type AddQuestionsPanelProps = {
     setPage: React.Dispatch<React.SetStateAction<number>>,
 }
 
+interface TestQuestionCreateErrors {
+    statement?: string,
+    option_1?: string,
+    option_2?: string,
+    option_3?: string,
+    option_4?: string,
+    answer?: string,
+}
+
 const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelProps) => {
+  
+    const [errors, setErrors] = useState<TestQuestionCreateErrors>()
+    const NO_ERRORS = true;
+    
+    function setQuestionCreateErrors(t: Test | {}, i: number): boolean {
+
+        if("questions" in t) {
+            const errors_found:TestQuestionCreateErrors = {};
+            const ERROR_EMPTY = "This field should not be empty"
+            const q = t.questions[i];
+            if(q.statement === "") errors_found.statement = ERROR_EMPTY;
+            if(q.option_1 === "") errors_found.option_1 = ERROR_EMPTY;
+            if(q.option_2 === "") errors_found.option_2 = ERROR_EMPTY;
+            if(q.option_3 === "") errors_found.option_3 = ERROR_EMPTY;
+            if(q.option_4 === "") errors_found.option_4 = ERROR_EMPTY;
+            if(q.answer === 0) errors_found.answer = ERROR_EMPTY;
+            if(Object.keys(errors_found).length === 0) {
+                return NO_ERRORS;
+            }
+            setErrors(errors_found);
+            console.log(errors_found);
+            return false;
+        }
+        return true;
+        
+    }
 
     function createNewQuestion() {
+ 
         setTest((p) => {
 
             if("questions" in p) {
@@ -61,7 +100,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
         })
     }
 
-    function setQuestionProperty(index: number, property: keyof Question, value: string) {
+    function setQuestionProperty(index: number, property: keyof Question, value: string | number) {
         setQuestion((p) => p.map((q, i) => {
             if (i === index) return {
                 ...q,
@@ -69,6 +108,34 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
             }
             return q;
         }))
+    }
+
+    const [ createNewTest, { isLoading }] = useCreateNewTestMutation();
+	const navigate = useNavigate()
+
+    async function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+        if("questions" in test) {
+            if(test.questions.length === 0) return;
+            for(let i = 0; i < test.questions.length; i++){
+                // console.log("checking question: %d", i + 1);
+                if(setQuestionCreateErrors(test, i) !== NO_ERRORS) {
+                    // console.log("Error in page" + i + 1);
+                    setPage(i + 1)
+                    return;
+                }
+            }
+            console.log("ready to submit");
+            await createNewTest(test)
+                .unwrap().then(() => {
+                    navigate("/");
+                }).catch(error => {
+                    if (error) {
+                        if (error.error) console.log({ "detail": error.error.split(": ")[1] })
+                        else if (error.data) console.log(error.data)
+                        else console.log({ "detail": JSON.stringify(error) })
+                    }
+                })
+        }
     }
 
     return (
@@ -97,11 +164,11 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                                         value={test.questions[page - 1].option_1}
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                             setQuestionProperty(page - 1, "option_1", e.target.value);
-                                        }}    
-                                        answer={test.questions[page - 1].answer === "A"}
+                                        }}
+                                        answer={test.questions[page - 1].answer === 1}
                                         onToggleCheckBox={(p) => {
-                                            if(p === false) setQuestionProperty(page - 1, "answer", "A")
-                                            if(p === true) setQuestionProperty(page - 1, "answer", "X")
+                                            if(p === false) setQuestionProperty(page - 1, "answer", 1)
+                                            if(p === true) setQuestionProperty(page - 1, "answer", 0)
                                         } }
                                     />
                                     <QuestionInput label="B" placeholder="Enter Option" 
@@ -109,10 +176,10 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                             setQuestionProperty(page - 1, "option_2", e.target.value);
                                         }} 
-                                        answer={test.questions[page - 1].answer === "B"}
+                                        answer={test.questions[page - 1].answer === 2}
                                         onToggleCheckBox={(p) => {
-                                            if(p === false) setQuestionProperty(page - 1, "answer", "B")
-                                            if(p === true) setQuestionProperty(page - 1, "answer", "X")
+                                            if(p === false) setQuestionProperty(page - 1, "answer", 2)
+                                            if(p === true) setQuestionProperty(page - 1, "answer", 0)
                                         } }
                                     />
                                     <QuestionInput label="C" placeholder="Enter Option" 
@@ -120,10 +187,10 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                             setQuestionProperty(page - 1, "option_3", e.target.value);
                                         }} 
-                                        answer={test.questions[page - 1].answer === "C"}
+                                        answer={test.questions[page - 1].answer === 3}
                                         onToggleCheckBox={(p) => {
-                                            if(p === false) setQuestionProperty(page - 1, "answer", "C")
-                                            if(p === true) setQuestionProperty(page - 1, "answer", "X")
+                                            if(p === false) setQuestionProperty(page - 1, "answer", 3)
+                                            if(p === true) setQuestionProperty(page - 1, "answer", 0)
                                         } }
                                     />
                                     <QuestionInput label="D" placeholder="Enter Option" 
@@ -131,10 +198,10 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                             setQuestionProperty(page - 1, "option_4", e.target.value);
                                         }} 
-                                        answer={test.questions[page - 1].answer === "D"}
+                                        answer={test.questions[page - 1].answer === 4}
                                         onToggleCheckBox={(p) => {
-                                            if(p === false) setQuestionProperty(page - 1, "answer", "D")
-                                            if(p === true) setQuestionProperty(page - 1, "answer", "X")
+                                            if(p === false) setQuestionProperty(page - 1, "answer", 4)
+                                            if(p === true) setQuestionProperty(page - 1, "answer", 0)
                                         } }
                                     />
                                 </div>
@@ -174,7 +241,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                     <div className="add_question_panel_right_question_tab_plus">+</div>
                 </div>
                 <Button onClick={createNewQuestion}>Create New Question</Button>
-                <Button>Submit</Button>
+                <Button onClick={onSubmit}>Submit</Button>
             </div>
         </div>
     )

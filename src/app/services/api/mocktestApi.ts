@@ -1,6 +1,11 @@
 import { rootApi } from '.';
 import { MockTest } from '../../../types/mocktest'
 
+type MockTestResponse = {
+    success: boolean,
+    data: MockTest,
+}
+
 export const mocktestsApi = rootApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllTests: builder.query<MockTest[], void>({
@@ -12,7 +17,7 @@ export const mocktestsApi = rootApi.injectEndpoints({
                 : [{ type: 'MockTest', id: 'LIST'}]
             )
         }),
-        getTestById: builder.query<MockTest, string>({
+        getTestById: builder.query<MockTestResponse, string>({
             query: (id) => `tests/${id}/`,
             providesTags: (result, error, id) => [{ type: 'MockTest', id}]
         }),
@@ -30,7 +35,14 @@ export const mocktestsApi = rootApi.injectEndpoints({
                 method: 'DELETE'
             }),
             invalidatesTags: (result, error, id) => [{ type: 'MockTest', id}]
+        }),
+        registerForTest: builder.mutation<MockTestResponse, number>({
+            query: (id) => ({
+                url: `tests/${id}/registrations/`,
+                method: 'PUT'
+            })
         })
+
     })
 })
 
@@ -39,4 +51,5 @@ export const {
     useGetTestByIdQuery,
     useCreateNewTestMutation,
     useDeleteTestMutation,
+    useRegisterForTestMutation,
 } = mocktestsApi;
