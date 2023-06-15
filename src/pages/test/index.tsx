@@ -1,3 +1,4 @@
+import "./style.css"
 import { TestCard } from "../../components/modules/upcomingtestcard"
 import { useGetAllTestsQuery } from "../../app/services/api/mocktestApi";
 
