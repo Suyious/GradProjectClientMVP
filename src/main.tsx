@@ -15,6 +15,8 @@ import Test from './pages/test'
 import TestCreate from "./pages/test/create"
 import TestDetail from './pages/test/[id]'
 import TestJoin from './pages/test/join'
+import TestPlay from './pages/play/test/[id]'
+import Play from './pages/play'
 
 const NotFound404 = () => <h1>Not Found</h1>
 
@@ -38,6 +40,13 @@ const router = createBrowserRouter([
 			{ "path": "me/", element: <Me/> },
 			{ "path": "signup/", element: <Signup/> },
 			{ "path": "login/", element: <Login/> },
+		]
+	},{
+		path: "play/",
+		element: <Play/>,
+		errorElement: <NotFound404/>,
+		children: [
+			{ path: "test/:id/", element: <TestPlay/>},
 		]
 	}, {
 		path: "experimental/",

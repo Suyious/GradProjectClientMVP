@@ -63,7 +63,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                     ...p,
                     questions: [
                         ...p.questions, {
-                            serial: p.questions.length + 1, statement: "", option_1: "", option_2: "", option_3: "", option_4: "", answer: "X",
+                            serial: p.questions.length + 1, statement: "", option_1: "", option_2: "", option_3: "", option_4: "", answer: 0,
                         }
                     ]
                 }
@@ -71,7 +71,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                 return {
                     ...p,
                     questions: [{
-                        serial: 1, statement: "", option_1: "", option_2: "", option_3: "", option_4: "", answer: "X",
+                        serial: 1, statement: "", option_1: "", option_2: "", option_3: "", option_4: "", answer: 0,
                     }]
                 }
             }

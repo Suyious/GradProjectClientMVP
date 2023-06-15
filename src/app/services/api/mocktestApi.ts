@@ -39,7 +39,7 @@ export const mocktestsApi = rootApi.injectEndpoints({
         registerForTest: builder.mutation<MockTestResponse, number>({
             query: (id) => ({
                 url: `tests/${id}/registrations/`,
-                method: 'PUT'
+                method: 'POST'
             })
         })
 

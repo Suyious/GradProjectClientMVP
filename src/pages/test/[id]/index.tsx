@@ -1,15 +1,40 @@
-import { useParams } from "react-router-dom"
-import { useGetTestByIdQuery } from "../../../app/services/api/mocktestApi";
+import { useNavigate, useParams } from "react-router-dom"
+import { useGetTestByIdQuery, useRegisterForTestMutation } from "../../../app/services/api/mocktestApi";
 import Container from "../../../components/layouts/container";
 import TestIcon from "../../../assets/icons/testicon";
 import { DateToMomentsAgo } from "../../../utils/moments";
 import { MockTest } from "../../../types/mocktest";
+import { Button } from "../../../components/elements/actions/buttons";
+import { useGetAllRegistrationsQuery } from "../../../app/services/api/registrationApi";
+import { useGetUserQuery } from "../../../app/services/api/authApi";
 
 const TestDetail = () => {
 
     const { id } = useParams();
+	const { data: user } = useGetUserQuery()
     const { data, error, isLoading } = useGetTestByIdQuery(id || "");
+	const [ register, { isLoading: isRegistering }] = useRegisterForTestMutation();
+	const { data: registrations, isLoading: isLoadingRegistrations } = useGetAllRegistrationsQuery({ 
+		user: user? user.id.toString() : "",
+		test: id || "",
+	})
 
+	const navigate = useNavigate();
+
+	async function handleRegister() {
+		if(id){
+			await register(Number.parseInt(id))
+				.unwrap() .then(() => {
+                    navigate("/");
+                }).catch(error => {
+                    if (error) {
+                        if (error.error) console.log({ "detail": error.error.split(": ")[1] })
+                        else if (error.data) console.log(error.data)
+                        else console.log({ "detail": JSON.stringify(error) })
+                    }
+                })
+		}
+	}
 
 	const TestDetailCard = ({ test }: { test?: MockTest}) => {
 		return (
@@ -31,7 +56,22 @@ const TestDetail = () => {
 
     return (
         <div className="test-detail flat-width-wrap">
-			{!isLoading && data? <TestDetailCard test={data.data}/>: JSON.stringify(error)}
+			<div className="test-detail-left">
+				{!isLoading && data? <TestDetailCard test={data.data}/>: JSON.stringify(error)}
+			</div>
+			<div className="test-detail-right">
+				<Button onClick={handleRegister} disabled={isRegistering || isLoadingRegistrations || registrations === undefined}>
+					{ isLoadingRegistrations || !user ? "Checking Registrations...": 
+						registrations ? 
+							registrations.length > 0 && user ?
+								"Registered":
+								isRegistering ?
+									"Registering...":
+									"Register Now":
+							"Register Now"
+					}
+				</Button>
+			</div>
         </div>
     )
 }
