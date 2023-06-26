@@ -16,7 +16,9 @@
 .datetime_input_date,
 .datetime_input_time {
   display: flex;
-  border: var(--button-border-primary);
+  border: var(--input-border-primary);
+  background: var(--background-secondary);
+  box-shadow: var(--shadow-primary);
   border-radius: 5px;
   padding: 0 0.3em 0 1em;
 }

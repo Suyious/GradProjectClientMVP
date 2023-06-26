@@ -1,0 +1,17 @@
+.test_join_body {
+    padding: 1em 0;
+}
+
+.test_join_head {
+    font-size: 0.9em;
+}
+
+.test_join_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.test_join_body button {
+    width: 100%;
+}

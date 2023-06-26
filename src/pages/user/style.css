@@ -1,3 +1,7 @@
+.user-body {
+	padding: 1em 0;
+}
+
 .form-block {
 	display: flex;
 	flex-direction: column;
@@ -6,4 +10,10 @@
 
 .form-subtext {
 	text-align: center;
+}
+
+.user-body .input-element {
+  border: var(--input-border-primary);
+  background: var(--background-primary);
+  box-shadow: var(--shadow-primary);
 }

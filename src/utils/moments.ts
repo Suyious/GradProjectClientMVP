@@ -33,3 +33,15 @@ export function DateToMomentsAgo(date: Date) {
     const yearsAgo = Math.floor(monthsAgo / 12);
     return yearsAgo + "y ago";
 }
+
+export function parseHour(h: string): string {
+    const n = Number.parseInt(h);
+    if (n > 12) return (n - 12).toString();
+    return h;
+}
+
+export function parseMeridian(h: string): string {
+    const n = Number.parseInt(h);
+    if (n > 12) return "PM";
+    return "AM"
+}

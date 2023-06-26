@@ -9,11 +9,13 @@ type NavigationProps = {
 
 const Navigation = ({ children, logo = <BCSP064Logo/> }: NavigationProps): JSX.Element => {
 	return (
-		<nav className="navigation nav-width-wrap">
-			<div className="navigation-logo">
-				<NavLink to="/">{ logo }</NavLink>
+		<nav className="navigation">
+			<div className="navigation-wrapper nav-width-wrap">
+				<div className="navigation-logo">
+					<NavLink to="/">{ logo }</NavLink>
+				</div>
+				{ children }
 			</div>
-			{ children }
 		</nav>
 	)
 }

@@ -1,0 +1,14 @@
+.countdown {
+    display: flex;
+    gap: 0.2em;
+}
+
+.countdown {
+    font-size: 1.3em;
+    font-weight: 700;
+}
+
+.countdown_sub {
+    font-size: 0.7em;
+    color: var(--accent-primary);
+}

@@ -1,6 +1,7 @@
 .upcoming-test-subtitle {
     display: flex;
     gap: 1em;
+    font-size: 0.9em;
 }
 
 .upcoming-test-title {
@@ -16,4 +17,9 @@
 .upcoming-test-call-to-action {
     display: flex;
     justify-content: space-between;
+}
+
+.upcoming-test-countdown-head {
+    font-size: 0.9em;
+    font-weight: 600;
 }

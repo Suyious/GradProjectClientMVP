@@ -1,7 +1,7 @@
+import "./style.css"
 import { CountDown, getTimeRemaining } from "../countdown";
 import { DateToMomentsAgo } from "../../../utils/moments";
 import { MockTest } from "../../../types/mocktest";
-import "./style.css"
 import { Link } from "../../elements/actions/links";
 import TestIcon from "../../../assets/icons/testicon";
 import Container from "../../layouts/container";
@@ -47,7 +47,7 @@ export const TestCard = ({ test = null }: TestCardProp) => {
             </p>
             <section className="upcoming-test-call-to-action">
                 <div className="upcoming-test-coundown-wrapper">
-                    starts in
+                    <div className="upcoming-test-countdown-head">starts in</div>
                     <CountDown to = {endsAt} />
                 </div>
                 <Link to={`/test/${test?.id}`} variant="fill" style={{ paddingInline : "4em"}}>Register Now</Link>

@@ -20,6 +20,7 @@
 	--accent-background-primary: #3FADE333;
 	--input-fill-primary: var(--accent-background-primary);
 	--input-stroke-primary: #0072AA80;
+	--input-border-primary: 2px solid var(--input-stroke-primary);
 	--input-stroke-selected: var(--button-stroke-primary);
 
 	--font-family-primary: 'Open Sans', 'Helvetica';

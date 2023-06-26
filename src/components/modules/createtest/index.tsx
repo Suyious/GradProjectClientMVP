@@ -6,6 +6,7 @@ import { Button } from "../../elements/actions/buttons";
 import DurationInput, { Duration } from "../../elements/inputs/duration";
 import { useState } from "react";
 import { Test } from "../../../pages/test/create";
+import { parseHour, parseMeridian } from "../../../utils/moments";
 
 type CreateTestProps = {
     state: Test | {};
@@ -64,18 +65,7 @@ const CreateTestForm = ({ state, setState, setPage }: CreateTestProps) => {
     }
 
     function unformatDate(date: string): DateTime {
-        
-        function parseHour(h: string): string {
-            const n = Number.parseInt(h);
-            if(n > 12) return (n - 12).toString();
-            return h;
-        }
 
-        function parseMeridian(h: string): string {
-            const n = Number.parseInt(h);
-            if(n > 12) return "PM";
-            return "AM"
-        }
 
         return {
             day: date.substring(8, 10),

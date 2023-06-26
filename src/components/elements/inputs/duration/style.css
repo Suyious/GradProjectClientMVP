@@ -1,6 +1,8 @@
 .duration_input_main {
     display: flex;
-    border: var(--button-border-primary);
+    border: var(--input-border-primary);
+    background: var(--background-secondary);
+    box-shadow: var(--shadow-primary);
     border-radius: 5px;
     padding: 0 1em;
     width: fit-content;

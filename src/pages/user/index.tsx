@@ -6,7 +6,9 @@ const User = () => {
 	return (
 		<>
 			<Navigation/>
-			<Outlet/>
+			<div className="user-body">
+				<Outlet/>
+			</div>
 		</>
 	)
 }

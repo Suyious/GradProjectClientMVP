@@ -1,3 +1,4 @@
+import "./style.css"
 import { useNavigate, useParams } from "react-router-dom"
 import { useGetTestByIdQuery, useRegisterForTestMutation } from "../../../app/services/api/mocktestApi";
 import Container from "../../../components/layouts/container";
@@ -7,12 +8,16 @@ import { MockTest } from "../../../types/mocktest";
 import { Button } from "../../../components/elements/actions/buttons";
 import { useGetAllRegistrationsQuery } from "../../../app/services/api/registrationApi";
 import { useGetUserQuery } from "../../../app/services/api/authApi";
+import { CountDown } from "../../../components/modules/countdown";
+import { endsAt } from "../../../utils/endTest";
+import DateTime from "../../../components/modules/datetime";
+import Duration from "../../../components/modules/duration";
 
 const TestDetail = () => {
 
     const { id } = useParams();
 	const { data: user } = useGetUserQuery()
-    const { data, error, isLoading } = useGetTestByIdQuery(id || "");
+    const { data: test, error, isLoading: isTestLoading } = useGetTestByIdQuery(id || "");
 	const [ register, { isLoading: isRegistering }] = useRegisterForTestMutation();
 	const { data: registrations, isLoading: isLoadingRegistrations } = useGetAllRegistrationsQuery({ 
 		user: user? user.id.toString() : "",
@@ -39,17 +44,29 @@ const TestDetail = () => {
 	const TestDetailCard = ({ test }: { test?: MockTest}) => {
 		return (
 			<Container.Card className="test-detail-container" variant="fill-shadow" style={{ maxWidth: "600px"}}>
-				<section className="upcoming-test-subtitle">
-					<p className="upcoming-test-author">{test && test.author ? test.author.first_name + " " + test.author.last_name : <span>Unspecified</span>}</p>
-					<p className="upcoming-test-created">{test ? DateToMomentsAgo(new Date(test.created_at)) : <span>Unspecified</span>}</p>
-				</section>
-				<header className="upcoming-test-title">
-					<TestIcon/>
-					<h2>{test ? test.name : <span>Untitled Test</span>}</h2>
-				</header>
-				<p className="upcoming-test-description">
-					{test ? test.description : <span>No Description</span>}
-				</p>
+				<div className="test-detail-left-top">
+					<section className="upcoming-test-subtitle">
+						<p className="upcoming-test-author">{test && test.author ? test.author.first_name + " " + test.author.last_name : <span>Unspecified</span>}</p>
+						<p className="upcoming-test-created">{test ? DateToMomentsAgo(new Date(test.created_at)) : <span>Unspecified</span>}</p>
+					</section>
+					<header className="upcoming-test-title">
+						<TestIcon/>
+						<h2>{test ? test.name : <span>Untitled Test</span>}</h2>
+					</header>
+					<p className="upcoming-test-description">
+						{test ? test.description : <span>No Description</span>}
+					</p>
+				</div>
+				<div className="test-detail-left-bottom">
+					<div className="test-detail-left-bottom-column test-detail-start-date">
+						<div className="test-detail-bottom-col-head">starting</div>
+						<div className="test-detail-bottom-col-box">{test? <DateTime datetime={test.starts_at}/> : "Undefined"}</div>
+					</div>
+					<div className="test-detail-left-bottom-column test-detail-duration">
+						<div className="test-detail-bottom-col-head">online for</div>
+						<div className="test-detail-bottom-col-box">{ test? <Duration duration={test.duration} /> : "Undefined"}</div>
+					</div>
+				</div>
 			</Container.Card>
 		)
 	}
@@ -57,9 +74,15 @@ const TestDetail = () => {
     return (
         <div className="test-detail flat-width-wrap">
 			<div className="test-detail-left">
-				{!isLoading && data? <TestDetailCard test={data.data}/>: JSON.stringify(error)}
+				<div className="test-detail-left-top">
+					{!isTestLoading && test? <TestDetailCard test={test.data}/>: JSON.stringify(error)}
+				</div>
 			</div>
 			<div className="test-detail-right">
+				<div>starts in</div>
+				<div className="test-detail-countdown">
+					{!isTestLoading && <CountDown to={test ? endsAt(test.data) : undefined} />}
+				</div>
 				<Button onClick={handleRegister} disabled={isRegistering || isLoadingRegistrations || registrations === undefined}>
 					{ isLoadingRegistrations || !user ? "Checking Registrations...": 
 						registrations ? 

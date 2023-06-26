@@ -24,7 +24,9 @@
 }
 
 .textbox-textarea.stroke {
-    border: 1px solid black;
+    border: var(--input-border-primary);
+    background: var(--background-secondary);
+    box-shadow: var(--shadow-primary);
     border-radius: 5px;
     min-height: 200px;
     padding: 1em;
