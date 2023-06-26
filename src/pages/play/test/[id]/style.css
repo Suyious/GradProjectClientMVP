@@ -12,9 +12,8 @@
 }
 
 .test-play-left {
-    width: 60%;
+    width: 70%;
     display: flex;
-    flex: 1;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -58,6 +57,11 @@
     padding: 0.5em;
     border: var(--input-border-primary);
     border-radius: 7px;
+    cursor: pointer;
+}
+
+.question_page_option.response {
+    border: 2px solid green;
 }
 
 .question_page_option_serial {
@@ -72,15 +76,20 @@
     color: var(--background-secondary);
 }
 
+.question_page_option_text {
+    font-size: 0.9em;
+}
+
 .test-play-right {
     display: flex;
     flex-direction: column;
     gap: 1em;
+    flex: 1;
 }
 
 .test-play-questions-icons {
     display: flex;
-    gap: 1em;
+    gap: 0.5em;
 }
 
 .test-play-question-icon {

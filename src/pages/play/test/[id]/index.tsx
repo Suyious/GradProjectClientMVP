@@ -3,13 +3,11 @@ import { useParams } from "react-router-dom";
 import { useGetTestAllQuestionsQuery, useGetTestByIdQuery } from "../../../../app/services/api/mocktestApi";
 import Navigation from "../../../../components/layouts/navigation";
 import { CountDown } from "../../../../components/modules/countdown";
-import { endsAt } from "../../../../utils/endTest";
 import { useState } from "react";
 import { Question } from "../../../../types/question";
 import { useGetAllRegistrationsQuery } from "../../../../app/services/api/registrationApi";
 import { useGetUserQuery } from "../../../../app/services/api/authApi";
 import { Button } from "../../../../components/elements/actions/buttons";
-import { Input } from "../../../../components/elements/inputs/input";
 
 const TestPlay = () => {
 
@@ -23,27 +21,59 @@ const TestPlay = () => {
 		test: id || "",
 	})
 
+    // Responses needs to be right format
+    const [response, setResponse] = useState<number>(0 | 1 | 2 | 3 | 4);
+
+    function toggleResponse(r: number) {
+        if(response === r) {
+            setResponse(0);
+        } else {
+            setResponse(r);
+        }
+    }
+
+    function pageNext() {
+        setPage(p => p + 1)
+    }
+
+    function pagePrevious() {
+        setPage(p => p - 1)
+    }
+
+
     const QuestionPage = ({ question }: { question: Question }) => {
         return (
             <div className="question_page_body">
                 <div className="question_page_serial">{question.serial}</div>
                 <div className="question_page_statement">{question.statement}</div>
                 <div className="question_page_options">
-                    <div className="question_page_option question_page_option1">
+                    <div
+                        className={"question_page_option question_page_option1 " + (response === 1 ? "response": "")}
+                        onClick={() => toggleResponse(1)}
+                    >
                         <div className="question_page_option_serial">A</div>
-                        {question.option_1}
+                        <div className="question_page_option_text">{question.option_1}</div>
                     </div>
-                    <div className="question_page_option question_page_option2">
+                    <div
+                        className={"question_page_option question_page_option2 " + (response === 2 ? "response": "")}
+                        onClick={() => toggleResponse(2)}
+                    >
                         <div className="question_page_option_serial">B</div>
-                        {question.option_2}
+                        <div className="question_page_option_text">{question.option_2}</div>
                     </div>
-                    <div className="question_page_option question_page_option3">
+                    <div
+                        className={"question_page_option question_page_option3 " + (response === 3 ? "response": "")}
+                        onClick={() => toggleResponse(3)}
+                    >
                         <div className="question_page_option_serial">C</div>
-                        {question.option_3}
+                        <div className="question_page_option_text">{question.option_3}</div>
                     </div>
-                    <div className="question_page_option question_page_option4">
+                    <div 
+                        className={"question_page_option question_page_option4 " + (response === 4 ? "response": "")}
+                        onClick={() => toggleResponse(4)}
+                    >
                         <div className="question_page_option_serial">D</div>
-                        {question.option_4}
+                        <div className="question_page_option_text">{question.option_4}</div>
                     </div>
                 </div>
             </div>
@@ -71,9 +101,15 @@ const TestPlay = () => {
                         }
                     </div>
                     <div className="test-play-left-bottom">
-                        <Button>Previous</Button>
+                        <Button
+                            disabled={questions && (page === 0 || questions.length === 0)}
+                            onClick={pagePrevious}
+                        >Previous</Button>
                         <span> {page} </span>
-                        <Button>Next</Button>
+                        <Button
+                            disabled={questions && (page === questions.length - 1 || questions.length === 0)}
+                            onClick={pageNext}
+                        >Next</Button>
                     </div>
                 </div>
                 <div className="test-play-right">

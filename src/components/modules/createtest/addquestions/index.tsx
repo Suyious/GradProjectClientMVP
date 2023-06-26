@@ -9,6 +9,7 @@ import { Question } from "../../../../types/question";
 import { useState } from "react";
 import { useCreateNewTestMutation } from "../../../../app/services/api/mocktestApi";
 import { useNavigate } from "react-router-dom";
+import TrashIcon from "../../../../assets/icons/trash";
 
 type AddQuestionsPanelProps = {
     test: Test | {},
@@ -55,9 +56,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
     }
 
     function createNewQuestion() {
- 
         setTest((p) => {
-
             if("questions" in p) {
                 return {
                     ...p,
@@ -80,13 +79,51 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
             setPage(test.questions.length + 1);
         } 
     }
+
+    function deleteAndShift(questions: Question[], serial: number) {
+        return questions.filter((q) => q.serial !== serial).map((q) => {
+            if(q.serial > serial) {
+                return {
+                    ...q,
+                    serial: q.serial - 1
+                }
+            } else {
+                return q
+            }
+        })
+    }
+
+    function deleteQuestion(serial: number) {
+        setTest((p) => {
+            if("questions" in p) {
+                return {
+                    ...p,
+                    questions: deleteAndShift(p.questions, serial)
+                }
+            } else {
+                return p;
+            }
+        })
+        if(serial === 1){
+            setPage(1);
+        }
+        else setPage(serial - 1);
+        setErrors(undefined);
+    }
+
+    function pageGoTo(serial: number) {
+        setPage(serial);
+        setErrors(undefined);
+    }
     
     function pageNext() {
         setPage(p => p + 1)
+        setErrors(undefined);
     }
 
     function pagePrevious() {
         setPage(p => p - 1)
+        setErrors(undefined);
     }
 
     function setQuestion(newquestion: (prev: Question[]) => Question[]) {
@@ -151,9 +188,10 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                 <div className="add_question_panel_form_wrapper">
                     {"questions" in test && test.questions.length > 0 ? (
                         <>
-                            <div className="add_question_panel_question_number">{test.questions[page - 1].serial}</div>
+                            <div className="add_question_panel_question_serial">{test.questions[page - 1].serial}</div>
                             <form className="add_question_form_body">
                                 <TextBox
+                                    error={errors?.statement}
                                     value={test.questions[page - 1].statement}
                                     onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                                         setQuestionProperty(page - 1, "statement", e.target.value);
@@ -161,6 +199,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                                     variant="plain" placeholder="Question Statement..." />
                                 <div className="add_question_form_options">
                                     <QuestionInput label="A" placeholder="Enter Option" 
+                                        error={errors?.option_1}
                                         value={test.questions[page - 1].option_1}
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                             setQuestionProperty(page - 1, "option_1", e.target.value);
@@ -172,6 +211,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                                         } }
                                     />
                                     <QuestionInput label="B" placeholder="Enter Option" 
+                                        error={errors?.option_2}
                                         value={test.questions[page - 1].option_2}
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                             setQuestionProperty(page - 1, "option_2", e.target.value);
@@ -183,6 +223,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                                         } }
                                     />
                                     <QuestionInput label="C" placeholder="Enter Option" 
+                                        error={errors?.option_3}
                                         value={test.questions[page - 1].option_3}
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                             setQuestionProperty(page - 1, "option_3", e.target.value);
@@ -194,6 +235,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                                         } }
                                     />
                                     <QuestionInput label="D" placeholder="Enter Option" 
+                                        error={errors?.option_4}
                                         value={test.questions[page - 1].option_4}
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                             setQuestionProperty(page - 1, "option_4", e.target.value);
@@ -215,6 +257,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                             </div>
                         </>
                     )}
+                    {errors?.answer && <div className="add_question_panel_errors">You must provide a valid answer</div>}
                 </div>
                 <div className="add_question_panel_page_nav">
                     <div className="add_question_panel_page_prev">
@@ -223,7 +266,9 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                             onClick={pagePrevious}
                         >Previous</Button>
                     </div>
-                    <div className="add_question_panel_page_current">{"questions" in test && test.questions.length > 0 ? page.toString().padStart(2, "0"): "00"}</div>
+                    <div className="add_question_panel_page_current">
+                        {"questions" in test && test.questions.length > 0 ? page.toString().padStart(2, "0"): "00"}
+                    </div>
                     <div className="add_question_panel_page_next">
                         <Button 
                             disabled={"questions" in test && (page === test.questions.length || test.questions.length === 0)}
@@ -233,15 +278,25 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                 </div>
             </div>
             <div className="add_question_panel_right">
-                <div className="add_question_panel_right_head">Questions</div>
-                <div className="add_question_panel_right_questions_tabs">
-                    { "questions" in test && test.questions.map((t) => (
-                        <div className="add_question_panel_right_question_tab_i" key={t.serial}>{t.serial}</div>
-                    ))}
-                    <div className="add_question_panel_right_question_tab_plus">+</div>
+                <div className="add_question_panel_right_top">
+                    <div className="add_question_panel_right_head">Questions</div>
+                    <div className="add_question_panel_right_questions_tabs">
+                        { "questions" in test && test.questions.map((t) => (
+                            <div className="add_question_panel_right_question_tab tab_i" 
+                                key={t.serial} onClick={() => pageGoTo(t.serial)}>
+                                {t.serial}
+                            </div>
+                        ))}
+                        <div className="add_question_panel_right_question_tab tab_plus" onClick={createNewQuestion}>+</div>
+                    </div>
+                    <div className="add_question_panel_right_buttons">
+                        <Button className="add_question_create_question_button" onClick={createNewQuestion}>Create New Question</Button>
+                        <div className="add_question_delete_button" onClick={() => deleteQuestion(page)}>
+                            <TrashIcon/>
+                        </div>
+                    </div>
                 </div>
-                <Button onClick={createNewQuestion}>Create New Question</Button>
-                <Button onClick={onSubmit}>Submit</Button>
+                <Button className="add_question_submit_button" onClick={onSubmit}>Submit</Button>
             </div>
         </div>
     )

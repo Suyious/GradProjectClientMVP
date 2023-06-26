@@ -7,13 +7,13 @@
 .textbox-head {
     display: flex;
     justify-content: space-between;
+    min-height: 1.3em;
 }
 
 .textbox-error {
     font-size: 0.9em;
     color: crimson;
 }
-
 
 .textbox-textarea {
     outline: none;

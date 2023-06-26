@@ -3,6 +3,7 @@ import "./style.css";
 
 type ButtonProps = {
     children: React.ReactNode,
+    className?: string,
     variant?: "fill" | "transparent" | "stroke",
     type?: "submit" | "button",
     style?: React.CSSProperties,
@@ -10,8 +11,8 @@ type ButtonProps = {
     disabled?: boolean,
 }
 
-export const Button = ({ children, type, disabled, onClick, variant, style = {} }: ButtonProps) => {
-    return (<button type={type} onClick={onClick} disabled={disabled} className="button-body button-strip">
+export const Button = ({ children, className="", type, disabled, onClick, variant, style = {} }: ButtonProps) => {
+    return (<button type={type} onClick={onClick} disabled={disabled} className={ "button-body button-strip " + className}>
             <Action style={style} variant={variant}>
                 {children}
             </Action>

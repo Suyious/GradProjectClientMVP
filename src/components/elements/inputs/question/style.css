@@ -1,6 +1,38 @@
+.question_input_body {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 0.5em;
+    border: var(--input-border-primary);
+    border-radius: 7px;
+}
+
 .question_input_input {
     display: flex;
+    align-items: center;
     gap: 1em;
+    width: 100%;
+    position: relative;
+}
+
+.question_input_option_label {
+    width: 2em;
+    height: 2em;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: var(--accent-primary);
+    color: var(--background-secondary);
+}
+
+.question_input_option_error {
+    position: absolute;
+    top: 0.3em;
+    right: 3em;
+    font-size: 0.9em;
+    color: crimson;
 }
 
 .question_input_input_box {
@@ -11,11 +43,25 @@
 }
 
 .question_input_answer_checkbox {
-    width: 1em;
-    height: 1em;
-    border: 1px solid #000;
+    width: 2em;
+    height: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    border: var(--input-border-primary);
+    cursor: pointer;
 }
 
 .question_input_answer_checkbox.checked {
-    background: green;
+    background: palegreen;
+}
+
+.question_input_answer_checkbox.checked svg {
+    width: 20px;
+    height: 20px;
+}
+
+.question_input_answer_checkbox.checked svg path {
+    fill: green;
 }

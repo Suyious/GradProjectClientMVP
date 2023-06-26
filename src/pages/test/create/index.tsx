@@ -1,3 +1,4 @@
+import "./style.css"
 import { useState } from "react"
 import CreateTestForm from "../../../components/modules/createtest";
 import { Question } from "../../../types/question";
