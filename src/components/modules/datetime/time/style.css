@@ -1,0 +1,12 @@
+.datetime_time {
+    display: flex;
+}
+
+.datetime_time_left {
+    font-size: 1.5em;
+}
+
+.datetime_time_super {
+    font-size: 0.7em;
+    font-weight: 700;
+}
