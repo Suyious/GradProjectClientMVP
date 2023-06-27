@@ -12,6 +12,7 @@ import { CountDown } from "../../../components/modules/countdown";
 import { endsAt } from "../../../utils/endTest";
 import DateTime from "../../../components/modules/datetime";
 import Duration from "../../../components/modules/duration";
+import { Link } from "../../../components/elements/actions/links";
 
 const TestDetail = () => {
 
@@ -71,15 +72,10 @@ const TestDetail = () => {
 		)
 	}
 
-    return (
-        <div className="test-detail flat-width-wrap">
-			<div className="test-detail-left">
-				<div className="test-detail-left-top">
-					{!isTestLoading && test? <TestDetailCard test={test.data}/>: JSON.stringify(error)}
-				</div>
-			</div>
-			<div className="test-detail-right">
-				<div>starts in</div>
+	const RegisterCard = () => {
+		return (
+			<div className="test-detail-register">
+				<div className="test-detail-register-head">starts in</div>
 				<div className="test-detail-countdown">
 					{!isTestLoading && <CountDown to={test ? endsAt(test.data) : undefined} />}
 				</div>
@@ -93,7 +89,39 @@ const TestDetail = () => {
 									"Register Now":
 							"Register Now"
 					}
-				</Button>
+				</Button>	
+			</div>
+		)
+	}
+
+	const PlayCard = () => {
+		return (
+			<div className="test-detail-play">
+				<div className="test-detail-play-head">now online</div>
+				<Link to={`/play/test/${id}`}>Play Now</Link>
+			</div>
+		)
+	}
+
+	const ResultCard = () => {
+		return (
+			<div className="test-detail-results">
+				<div className="test-detail-results-head">test results</div>
+			</div>
+		)
+	}
+
+    return (
+        <div className="test-detail flat-width-wrap">
+			<div className="test-detail-left">
+				<div className="test-detail-left-top">
+					{!isTestLoading && test? <TestDetailCard test={test.data}/>: JSON.stringify(error)}
+				</div>
+			</div>
+			<div className="test-detail-right">
+				{ !isTestLoading && test && test.data.isTestAvailable && <RegisterCard/>}
+				{ !isTestLoading && test && test.data.isTestOnline && <PlayCard/>}
+				{ !isTestLoading && test && test.data.isTestOffline && <ResultCard/>}
 			</div>
         </div>
     )

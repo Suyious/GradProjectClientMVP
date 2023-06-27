@@ -11,4 +11,7 @@ export type MockTest = {
     created_at: string,
     starts_at: string,
     duration: string,
+    isTestOnline: boolean,
+    isTestAvailable: boolean,
+    isTestOffline: boolean
 }

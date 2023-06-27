@@ -24,7 +24,10 @@ export const COUNTDOWN_DEAD: CountDownTime = {
 }
 
 export function getTimeRemaining(endtime: string): CountDownTime {
-	const total = Date.parse(endtime) - Date.parse(new Date().toISOString());
+	const currentTime = new Date().getTime();
+	const endTime = new Date(endtime).getTime();
+	const total = endTime - currentTime;
+
 	function padTime(num: Number) {
 		return num.toString().padStart(2, "0");
 	}

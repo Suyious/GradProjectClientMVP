@@ -17,6 +17,20 @@
 .upcoming-test-call-to-action {
     display: flex;
     justify-content: space-between;
+    align-items: end;
+    margin-top: 0.5em;
+}
+
+@media screen and (max-width: 600px) {
+    .upcoming-test-call-to-action {
+        flex-direction: column;
+        gap: 0.5em;
+        align-items: flex-start;
+    }
+
+    .upcoming-test-call-to-action a {
+        width: 100%;
+    }
 }
 
 .upcoming-test-countdown-head {

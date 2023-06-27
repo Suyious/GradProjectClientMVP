@@ -30,7 +30,6 @@ export const TestCard = ({ test = null }: TestCardProp) => {
         const duration = extractDuration(test.duration)
         endsAt = new Date(new Date(test.starts_at).getTime() + duration.hours * 60 * duration.minutes * 60 * duration.seconds * 60 * 1000).toISOString();
     }
-    console.log(test);
 
     return (
         <Container.Card variant="fill-shadow" className="upcoming-test-card" style={{ maxWidth: "600px"}}>
@@ -50,7 +49,7 @@ export const TestCard = ({ test = null }: TestCardProp) => {
                     <div className="upcoming-test-countdown-head">starts in</div>
                     <CountDown to = {endsAt} />
                 </div>
-                <Link to={`/test/${test?.id}`} variant="fill" style={{ paddingInline : "4em"}}>Register Now</Link>
+                <Link to={`/test/${test?.id}`} variant="fill" style={{ paddingInline : "4em", textAlign: "center"}}>Register Now</Link>
             </section>
         </Container.Card>
     )

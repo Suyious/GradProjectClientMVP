@@ -4,8 +4,16 @@
     gap: 2em;
 }
 
-.test-detail-left {
-    width: 70%;
+@media screen and (max-width: 600px) {
+    .test-detail {
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .test-detail-left {
+        width: 70%;
+    }
 }
 
 .test-detail-left-bottom {
@@ -47,12 +55,18 @@
 	align-items: center;
 }
 
+.test-detail-register-head,
+.test-detail-play-head,
+.test-detail-results-head {
+    text-align: center;
+    border-bottom: 1px solid #000;
+}
+
 .test-detail-countdown {
     padding: 1em 0;
     width: 100%;
     display: flex;
     justify-content: center;
-    border-top: 1px solid #000;
 }
 
 .test-detail-right button {
@@ -61,7 +75,7 @@
 
 .test-detail-container {
     width: 100%;
-    height: 80vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

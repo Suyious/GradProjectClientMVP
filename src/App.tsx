@@ -43,11 +43,11 @@ function App(): JSX.Element {
 
 	const LoadingLinks = () => (
 		<ul className="navigation-links">
-			<li><Link to="/user/signup">
-				Loading...
+			<li><Link style={{ color: "#0076AFA8"}} to="/user/signup">
+				signup
 			</Link></li>
-			<li><Link variant='fill' to="/user/login">
-				Loading...
+			<li><Link style={{ color: "#f0ffff9c"}} variant='fill' to="/user/login">
+				login
 			</Link></li>
 		</ul>
 	)
