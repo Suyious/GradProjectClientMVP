@@ -1,4 +1,5 @@
 export type Question = {
+	id: number,
 	serial: number;
 	statement: string;
 	option_1: string;

@@ -6,7 +6,8 @@ type CountDownProps = {
 	realtime?: boolean,
 	variant?: "stylized" | "plain",
 	minutes?: boolean,
-	seconds?: boolean
+	seconds?: boolean,
+	onCountDownEnd?: () => void,
 }
 
 interface CountDownTime {
@@ -47,7 +48,7 @@ export function getTimeRemaining(endtime: string): CountDownTime {
 }
 
 // to = new Date('2024-06-21T00:00:00.000Z')
-export const CountDown = ({ to = null, realtime = true, variant = "plain", seconds = true, minutes = true } : CountDownProps) => {
+export const CountDown = ({ to = null, realtime = true, variant = "plain", seconds = true, minutes = true, onCountDownEnd } : CountDownProps) => {
 
 	const [ time_to, setTime_to ] = useState<CountDownTime>(to ? getTimeRemaining(to): COUNTDOWN_DEAD);
 
@@ -57,6 +58,7 @@ export const CountDown = ({ to = null, realtime = true, variant = "plain", secon
 				const tt = getTimeRemaining(to)
 				if(tt === COUNTDOWN_DEAD) {
 					// console.log("Time is up")
+					if(onCountDownEnd) onCountDownEnd();
 					return clearInterval(interval)
 				}
 				setTime_to(tt)

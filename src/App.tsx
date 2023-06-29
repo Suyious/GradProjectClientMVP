@@ -54,7 +54,7 @@ function App(): JSX.Element {
 
 	return (
 		<div className="App">
-			<Navigation>
+			<Navigation variant="fixed">
 				{ isLoading ? <LoadingLinks/> : 
 					user ? <LoggedInLinks/> : <LoggedOutLinks/> }
 			</Navigation>

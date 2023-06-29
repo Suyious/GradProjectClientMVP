@@ -60,21 +60,23 @@ const CreateTestForm = ({ state, setState, setPage }: CreateTestProps) => {
         return "00";
     }
 
-    function formatDate(date: DateTime): string {
-        return `${date.year.padStart(4, '0')}-${date.month.padStart(2, '0')}-${date.day.padStart(2, '0')}T${getHour(date.meridian, date.hours).padStart(2, '0')}:${date.minutes.padStart(2, '0')}:${date.seconds.padStart(2, '0')}Z`;
+    function formatDate(date: DateTime): string { 
+        const tempd = new Date(`${date.year.padStart(4, '0')}-${date.month.padStart(2, '0')}-${date.day.padStart(2, '0')}T${getHour(date.meridian, date.hours).padStart(2, '0')}:${date.minutes.padStart(2, '0')}:${date.seconds.padStart(2, '0')}`);
+        return tempd.toISOString();
     }
 
     function unformatDate(date: string): DateTime {
 
+        const tempd = new Date(date);
 
         return {
-            day: date.substring(8, 10),
-            month: date.substring(5, 7),
-            year: date.substring(0, 4),
-            hours: parseHour(date.substring(11, 13)),
-            minutes: date.substring(14, 16),
-            seconds: date.substring(17, 19),
-            meridian: parseMeridian(date.substring(11, 13)),
+            day: tempd.getDate().toString().padStart(2, "0"),
+            month: (tempd.getMonth() + 1).toString().padStart(2, "0"),
+            year: tempd.getFullYear().toString().padStart(2, "0"),
+            hours: parseHour(tempd.getHours().toString()).padStart(2, "0"),
+            minutes: tempd.getMinutes().toString().padStart(2, "0"),
+            seconds: tempd.getSeconds().toString().padStart(2, "0"),
+            meridian: parseMeridian(tempd.getHours().toString()).padStart(2, "0"),
         }
     }
 

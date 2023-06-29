@@ -1,7 +1,8 @@
 .test-detail {
-    padding: 1em 0;
+    padding-block: 5em;
     display: flex;
     gap: 2em;
+    min-height: 100vh;
 }
 
 @media screen and (max-width: 600px) {
@@ -59,7 +60,18 @@
 .test-detail-play-head,
 .test-detail-results-head {
     text-align: center;
+    width: 100%;
     border-bottom: 1px solid #000;
+}
+
+.test-detail-play-subtitle {
+    padding: 1em 0;
+}
+
+.test-detail-play {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .test-detail-results-panel {

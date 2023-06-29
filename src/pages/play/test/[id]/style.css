@@ -83,8 +83,19 @@
 .test-play-right {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.test-play-right-top {
+    display: flex;
+    flex-direction: column;
     gap: 1em;
     flex: 1;
+}
+
+.test-play-right-bottom button {
+    width: 100%;
 }
 
 .test-play-questions-icons {
@@ -107,6 +118,7 @@
     border: 2px solid green;
     background-color: palegreen;
     color: green;
+    font-weight: 700;
 }
 
 .test-play-unavailable {
@@ -122,12 +134,12 @@
     align-items: center;
 }
 
-.test-play-unavialable-head {
+.test-play-unavailable-head {
     font-size: 2em;
     font-weight: 700;
 }
 
-.test-play-unavialable-subtext {
+.test-play-unavailable-subtext {
     width: 20em;
     text-align: center;
     margin-bottom: 1em;

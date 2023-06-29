@@ -18,9 +18,9 @@ export const registrationApi = rootApi.injectEndpoints({
                 },
             }),
         }),
-        createNewResponse: builder.mutation<Response, { id: number, body: Response}>({
+        createNewResponse: builder.mutation<Response, { id: number, body: Response[]}>({
             query: ({ id, body }) => ({
-                url: `/registrations/${id}/`,
+                url: `/registrations/${id}/responses/`,
                 method: 'POST',
                 body,
             })

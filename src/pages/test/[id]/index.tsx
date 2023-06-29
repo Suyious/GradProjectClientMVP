@@ -98,7 +98,8 @@ const TestDetail = () => {
 		return (
 			<div className="test-detail-play">
 				<div className="test-detail-play-head">now online</div>
-				<Link to={`/play/test/${id}`}>Play Now</Link>
+				<div className="test-detail-play-subtitle">The Test is Now Online.</div>
+				<Link variant="fill" to={`/play/test/${id}`}>Play Now</Link>
 			</div>
 		)
 	}

@@ -3,6 +3,13 @@
 	box-shadow: var(--shadow-primary);
 }
 
+.navigation.fixed {
+	position: fixed;
+	width: 100vw;
+	top: 0;
+	left: 0;
+}
+
 .navigation-wrapper {
 	display: flex;
 	justify-content: space-between;

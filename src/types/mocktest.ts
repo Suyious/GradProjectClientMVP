@@ -14,4 +14,5 @@ export type MockTest = {
     isTestOnline: boolean,
     isTestAvailable: boolean,
     isTestOffline: boolean
+    endsAt: string,
 }

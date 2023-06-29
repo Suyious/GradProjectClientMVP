@@ -5,11 +5,12 @@ import "./style.css"
 type NavigationProps = {
 	children?: React.ReactNode;
 	logo?: React.ReactNode;
+	variant?: "plain" | "fixed"
 }
 
-const Navigation = ({ children, logo = <BCSP064Logo/> }: NavigationProps): JSX.Element => {
+const Navigation = ({ children, logo = <BCSP064Logo/>, variant = "plain" }: NavigationProps): JSX.Element => {
 	return (
-		<nav className="navigation">
+		<nav className={ "navigation " + variant }>
 			<div className="navigation-wrapper nav-width-wrap">
 				<div className="navigation-logo">
 					<NavLink to="/">{ logo }</NavLink>

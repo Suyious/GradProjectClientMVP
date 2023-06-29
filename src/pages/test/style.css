@@ -1,5 +1,5 @@
 .mock-test-pages-root {
-    margin-top: 1em;
+    padding-block: 5em 1em;
     display: flex;
     flex-direction: column;
     gap: 1em;

@@ -1,5 +1,5 @@
 import "./style.css"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetTestAllQuestionsQuery, useGetTestByIdQuery } from "../../../../app/services/api/mocktestApi";
 import Navigation from "../../../../components/layouts/navigation";
 import { CountDown } from "../../../../components/modules/countdown";
@@ -25,39 +25,38 @@ const TestPlay = () => {
 	})
 
     const [ createNewResponse ] = useCreateNewResponseMutation()
-
-    // Responses needs to be right format
     const [response, setResponse] = useState<Response[]>([]);
-
 
     useEffect(() => {
         if(!isQuestionLoading && questions) {
             setResponse(questions.map((q) => ({
-                question_id: q.serial,
+                question_id: q.id,
                 answer: 0,
             })))
         }
     }, [questions, isQuestionLoading])
 
     function toggleResponse(index: number, r: number) {
-        if(response[index].answer === r) {
-            setResponse(p => p.map((res) => {
-                if(res.question_id === index + 1) {
-                    return {
-                        ...res,
-                        answer: 0
-                    }
-                } else return res;
-            }))
-        } else { 
-            setResponse(p => p.map((res) => {
-                if(res.question_id === index + 1) {
-                    return {
-                        ...res,
-                        answer: r
-                    }
-                } else return res;
-            }))
+        if(!isQuestionLoading && questions) {
+            if(response[index].answer === r) {
+                setResponse(p => p.map((res) => {
+                    if(res.question_id === questions[index].id) {
+                        return {
+                            ...res,
+                            answer: 0
+                        }
+                    } else return res;
+                }))
+            } else { 
+                setResponse(p => p.map((res) => {
+                    if(res.question_id === questions[index].id) {
+                        return {
+                            ...res,
+                            answer: r
+                        }
+                    } else return res;
+                }))
+            }
         }
     }
 
@@ -115,12 +114,29 @@ const TestPlay = () => {
         return (
             <div className="test-play-unavailable">
                 <div className="test-play-unavailable-wrapper">
-                    <div className="test-play-unavialable-head">Unavailable</div>
-                    <div className="test-play-unavialable-subtext">Seems like this test is yet to come online or has already been conducted.</div>
+                    <div className="test-play-unavailable-head">Unavailable</div>
+                    <div className="test-play-unavailable-subtext">Seems like this test is yet to come online or has already been conducted.</div>
                     <Link variant="fill" to="/">Go Back Home</Link>
                 </div>
             </div>
         )
+    }
+
+	const navigate = useNavigate()
+
+    async function onSubmit() {
+        if(!isLoadingRegistrations && registrations && response) {
+            await createNewResponse({
+                id: registrations[0].id,
+                body: response
+            }) .unwrap()
+            .then(() => {
+                console.log("Response", response);
+                navigate("/");
+            }) .catch((error) => {
+                console.log(error);
+            })
+        }
     }
 
     const TestPlayInterface = () => {
@@ -152,14 +168,19 @@ const TestPlay = () => {
                     </div>
                 </div>
                 <div className="test-play-right">
-                    <div>Questions</div>
-                    {response.length > 0 && (
-                        <div className="test-play-questions-icons">
-                            {!isQuestionLoading ? questions ? questions.map((q) => (
-                                <div className={"test-play-question-icon " + (response[q.serial - 1].answer !== 0 ? "response" : "")} key={q.serial} onClick={() => setPage(q.serial - 1)}>{q.serial}</div>
-                            )) : "No Questions" : "Loading..."}
-                        </div>
-                    )}
+                    <div className="test-play-right-top">
+                        <div>Questions</div>
+                        {response.length > 0 && (
+                            <div className="test-play-questions-icons">
+                                {!isQuestionLoading ? questions ? questions.map((q) => (
+                                    <div className={"test-play-question-icon " + (response[q.serial - 1].answer !== 0 ? "response" : "")} key={q.serial} onClick={() => setPage(q.serial - 1)}>{q.serial}</div>
+                                )) : "No Questions" : "Loading..."}
+                            </div>
+                        )}
+                    </div>
+                    <div className="test-play-right-bottom">
+                        <Button onClick={onSubmit}>Submit</Button>
+                    </div>
                 </div>
             </>
         )
@@ -169,7 +190,7 @@ const TestPlay = () => {
         <div className="test-play-body">
             <Navigation>
                 {isTestLoading && <CountDown />}
-                {!isTestLoading && test && test.data.isTestOnline && <CountDown to={test ? test.data.starts_at : undefined} />}
+                {!isTestLoading && test && test.data.isTestOnline && <CountDown onCountDownEnd={onSubmit} to={test ? test.data.endsAt : undefined} />}
             </Navigation>
             <div className="test-play-main flat-width-wrap">
                 { isTestLoading ? (
