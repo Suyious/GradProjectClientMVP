@@ -10,7 +10,6 @@ import User from "./pages/user"
 import Signup from "./pages/user/signup"
 import Login from "./pages/user/login"
 import Me from "./pages/user/me"
-import Experimental from "./pages/experimental"
 import Test from './pages/test'
 import TestCreate from "./pages/test/create"
 import TestDetail from './pages/test/[id]'
@@ -47,10 +46,6 @@ const router = createBrowserRouter([
 		children: [
 			{ path: "test/:id/", element: <TestPlay/>},
 		]
-	}, {
-		path: "experimental/",
-		element: <Experimental/>,
-		errorElement: <NotFound/>,
 	}
 ])
 
