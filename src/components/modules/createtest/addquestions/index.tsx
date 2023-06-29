@@ -78,6 +78,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
         if("questions" in test) {
             setPage(test.questions.length + 1);
         } 
+        setErrors(undefined);
     }
 
     function deleteAndShift(questions: Question[], serial: number) {

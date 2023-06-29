@@ -1,18 +1,6 @@
 import { rootApi } from ".";
-
-type Registration = {
-    id: number,
-    user: {
-        first_name: string,
-        last_name: string,
-        username: string,
-        email: string,
-    },
-    score: number,
-    test: number,
-    created_at: string,
-    responses: []
-}
+import { Registration } from "../../../types/registration";
+import { Response } from "../../../types/response";
 
 type FilterParams = {
     user: string,
@@ -29,10 +17,18 @@ export const registrationApi = rootApi.injectEndpoints({
                     test: params.test,
                 },
             }),
+        }),
+        createNewResponse: builder.mutation<Response, { id: number, body: Response}>({
+            query: ({ id, body }) => ({
+                url: `/registrations/${id}/`,
+                method: 'POST',
+                body,
+            })
         })
     })
 })
 
 export const {
     useGetAllRegistrationsQuery,
+    useCreateNewResponseMutation,
 } = registrationApi;

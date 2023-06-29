@@ -102,3 +102,33 @@
     border: var(--input-border-primary);
     cursor: pointer;
 }
+
+.test-play-question-icon.response {
+    border: 2px solid green;
+    background-color: palegreen;
+    color: green;
+}
+
+.test-play-unavailable {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.test-play-unavailable-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.test-play-unavialable-head {
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.test-play-unavialable-subtext {
+    width: 20em;
+    text-align: center;
+    margin-bottom: 1em;
+}

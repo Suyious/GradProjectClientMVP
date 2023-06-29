@@ -62,6 +62,10 @@
     border-bottom: 1px solid #000;
 }
 
+.test-detail-results-panel {
+    padding: 1em 0;
+}
+
 .test-detail-countdown {
     padding: 1em 0;
     width: 100%;

@@ -17,7 +17,7 @@ import { Link } from "../../../components/elements/actions/links";
 const TestDetail = () => {
 
     const { id } = useParams();
-	const { data: user } = useGetUserQuery()
+	const { data: user, isLoading: isLoadingUser } = useGetUserQuery()
     const { data: test, error, isLoading: isTestLoading } = useGetTestByIdQuery(id || "");
 	const [ register, { isLoading: isRegistering }] = useRegisterForTestMutation();
 	const { data: registrations, isLoading: isLoadingRegistrations } = useGetAllRegistrationsQuery({ 
@@ -80,14 +80,14 @@ const TestDetail = () => {
 					{!isTestLoading && <CountDown to={test ? endsAt(test.data) : undefined} />}
 				</div>
 				<Button onClick={handleRegister} disabled={isRegistering || isLoadingRegistrations || registrations === undefined}>
-					{ isLoadingRegistrations || !user ? "Checking Registrations...": 
+					{ isLoadingRegistrations || isLoadingUser ? "Checking Registrations...": 
 						registrations ? 
 							registrations.length > 0 && user ?
 								"Registered":
 								isRegistering ?
 									"Registering...":
 									"Register Now":
-							"Register Now"
+							"Checking Registrations"
 					}
 				</Button>	
 			</div>
@@ -104,9 +104,21 @@ const TestDetail = () => {
 	}
 
 	const ResultCard = () => {
+
 		return (
 			<div className="test-detail-results">
 				<div className="test-detail-results-head">test results</div>
+				{ isLoadingRegistrations || isLoadingUser ? "Looking for Registrations." :
+					registrations ? 
+						registrations.length > 0 ?
+							( <div className="test-detail-results-panel">
+									You scored a total of {registrations[0].score}.
+								</div> ):
+							(<div className="test-detail-results-panel">
+								Seems like you didn't take this test.
+							</div>):
+						"Looking for Registrations."	
+				}
 			</div>
 		)
 	}
