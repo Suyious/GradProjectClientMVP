@@ -1,0 +1,25 @@
+.tabs-body {
+    position: relative;
+}
+
+.tabs-navigation-body {
+    display: flex;
+    position: sticky;
+    top: 4em;
+    left: 0;
+    background: var(--background-primary); 
+    padding-inline: 1em;
+}
+
+.tabs-navigation-tab-label {
+    padding: 0.5em 2em;
+    cursor: pointer;
+}
+
+.tabs-navigation-tab-label.select {
+    border-bottom: var(--button-border-primary);
+}
+
+.tabs-outlet-wrapper {
+    padding-block: 1em;
+}
