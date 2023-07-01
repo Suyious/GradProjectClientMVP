@@ -44,6 +44,6 @@ const baseQuery = fetchBaseQuery({
 export const rootApi = createApi({
     reducerPath: "rootApi",
     baseQuery: baseQueryWithReAuth,
-    tagTypes: ['User', 'MockTest'],
+    tagTypes: ['User', 'MockTest', 'Registration'],
     endpoints: () => ({}),
 })

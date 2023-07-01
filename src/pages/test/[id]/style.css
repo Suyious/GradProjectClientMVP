@@ -78,6 +78,23 @@
     padding: 1em 0;
 }
 
+.test-detail-results-table {
+    width: 20em;
+    max-width: 100%;
+}
+
+.test-detail-results-row {
+    display: flex;
+}
+
+.test-detail-results-row.head {
+    font-weight: 700;
+}
+
+.test-detail-results-col {
+    flex: 1;
+}
+
 .test-detail-countdown {
     padding: 1em 0;
     width: 100%;

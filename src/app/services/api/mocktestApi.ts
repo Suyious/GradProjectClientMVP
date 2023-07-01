@@ -1,6 +1,7 @@
 import { rootApi } from '.';
 import { MockTest } from '../../../types/mocktest'
 import { Question } from '../../../types/question';
+import { User } from '../../../types/user';
 
 type MockTestResponse = {
     success: boolean,
@@ -9,10 +10,19 @@ type MockTestResponse = {
     },
 }
 
+type MockTestRegistrationsResponse = {
+    id: number,
+    user: User,
+    score: number,
+    test_id: number,
+    created_at: string,
+    responses: Response[]
+}
+
 export const mocktestsApi = rootApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAllTests: builder.query<MockTest[], void>({
-            query: () => 'tests/',
+        getAllTests: builder.query<MockTest[], { filter?: string}>({
+            query: ({ filter }) => `tests?filter=${filter}`,
             providesTags: (result) => (
                 result?
                     [...result.map(({ id }) => ({ type: 'MockTest', id} as const)),
@@ -45,7 +55,12 @@ export const mocktestsApi = rootApi.injectEndpoints({
                 method: 'GET'
             })
         }),
-        registerForTest: builder.mutation<MockTestResponse, number>({
+        getTestAllRegistrations: builder.query<MockTestRegistrationsResponse[], string>({
+            query: (id) => ({
+                url: `tests/${id}/registrations/`,
+            })
+        }),
+        registerForTest: builder.mutation<MockTestRegistrationsResponse, number>({
             query: (id) => ({
                 url: `tests/${id}/registrations/`,
                 method: 'POST'
@@ -61,5 +76,6 @@ export const {
     useCreateNewTestMutation,
     useDeleteTestMutation,
     useGetTestAllQuestionsQuery,
+    useGetTestAllRegistrationsQuery,
     useRegisterForTestMutation,
 } = mocktestsApi;

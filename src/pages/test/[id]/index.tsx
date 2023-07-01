@@ -1,6 +1,6 @@
 import "./style.css"
 import { useNavigate, useParams } from "react-router-dom"
-import { useGetTestByIdQuery, useRegisterForTestMutation } from "../../../app/services/api/mocktestApi";
+import { useGetTestAllRegistrationsQuery, useGetTestByIdQuery, useRegisterForTestMutation } from "../../../app/services/api/mocktestApi";
 import Container from "../../../components/layouts/container";
 import TestIcon from "../../../assets/icons/testicon";
 import { DateToMomentsAgo } from "../../../utils/moments";
@@ -24,6 +24,7 @@ const TestDetail = () => {
 		user: user? user.id.toString() : "",
 		test: id || "",
 	})
+	const { data: testResults, isLoading: isTestResultsLoading } = useGetTestAllRegistrationsQuery(id || "");
 
 	const navigate = useNavigate();
 
@@ -108,18 +109,39 @@ const TestDetail = () => {
 
 		return (
 			<div className="test-detail-results">
-				<div className="test-detail-results-head">test results</div>
-				{ isLoadingRegistrations || isLoadingUser ? "Looking for Registrations." :
-					registrations ? 
-						registrations.length > 0 ?
-							( <div className="test-detail-results-panel">
-									You scored a total of {registrations[0].score}.
-								</div> ):
-							(<div className="test-detail-results-panel">
-								Seems like you didn't take this test.
-							</div>):
-						"Looking for Registrations."	
-				}
+				<div className="test-detail-results-top">
+					<div className="test-detail-results-head">Your Score</div>
+					{ isLoadingRegistrations || isLoadingUser ? "Looking for Registrations." :
+						registrations ? 
+							registrations.length > 0 ?
+								( <div className="test-detail-results-panel">
+										You scored a total of {registrations[0].score}.
+									</div> ):
+								(<div className="test-detail-results-panel">
+									Seems like you didn't take this test.
+								</div>):
+							"Looking for Registrations."	
+					}
+				</div>
+				<div className="test-detail-results-bottom">
+					<div className="test-detail-results-head">test results</div>
+					{ !isTestResultsLoading && testResults && (
+						<div className="test-detail-results-table">
+							<div className="test-detail-results-row head">
+								<div className="test-detail-results-col rank">Rank</div>
+								<div className="test-detail-results-col user">Name</div>
+								<div className="test-detail-results-col score">Score</div>
+							</div>
+							{ testResults.map((result, i) => (
+								<div key={result.id} className="test-detail-results-row">
+									<div className="test-detail-results-col rank">{i + 1}</div>
+									<div className="test-detail-results-col user">{result.user.first_name} {result.user.last_name}</div>
+									<div className="test-detail-results-col score">{result.score}</div>
+								</div>
+							))}
+						</div>
+					)}
+				</div>
 			</div>
 		)
 	}

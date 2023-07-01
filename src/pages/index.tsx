@@ -3,7 +3,7 @@ import { useGetUserQuery } from '../app/services/api/authApi'
 
 const LoadingComponenet = () => {
 	return (
-		<div className="loading-skeleton-body"> Loaderload</div>
+		<div className="loading-skeleton-body" style={{ marginTop: "5em" }}>Loaderload</div>
 	)
 }
 
@@ -13,7 +13,11 @@ const Home = () => {
 
 	if(isLoading) return <LoadingComponenet/>
 
-	return ( (!isError && user) ? <Navigate to="/test/"/>: <Navigate to="/user/login/"/> )
+	if(isError) return (
+		<Navigate to="/user/login/"/>
+	)
+
+	return <Navigate to="/test/"/>
 }
 
 export default Home

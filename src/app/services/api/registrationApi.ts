@@ -17,6 +17,12 @@ export const registrationApi = rootApi.injectEndpoints({
                     test: params.test,
                 },
             }),
+            providesTags: (result) => (
+                result?
+                    [...result.map(({ id }) => ({ type: 'Registration', id} as const)),
+                    { type: 'Registration', id: 'LIST'}]
+                : [{ type: 'Registration', id: 'LIST'}]
+            )
         }),
         createNewResponse: builder.mutation<Response, { id: number, body: Response[]}>({
             query: ({ id, body }) => ({
