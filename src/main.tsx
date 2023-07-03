@@ -16,13 +16,13 @@ import TestDetail from './pages/test/[id]'
 import TestJoin from './pages/test/join'
 import TestPlay from './pages/play/test/[id]'
 import Play from './pages/play'
-import NotFound from './pages/404'
+import Error404 from './pages/404'
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <App/>,
-		errorElement: <NotFound/>,
+		errorElement: <Error404/>,
 		children: [
 			{ path: "/", element: <Home/>, },
 			{ path: "test/", element: <Test/>},
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
 	},{
 		path: "user/",
 		element: <User/>,
-		errorElement: <NotFound/>,
+		errorElement: <Error404/>,
 		children: [
 			{ "path": "me/", element: <Me/> },
 			{ "path": "signup/", element: <Signup/> },
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
 	},{
 		path: "play/",
 		element: <Play/>,
-		errorElement: <NotFound/>,
+		errorElement: <Error404/>,
 		children: [
 			{ path: "test/:id/", element: <TestPlay/>},
 		]

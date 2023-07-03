@@ -1,15 +1,12 @@
 {
-  "name": "BCSP064: Mock Test System",
+  "name": "gradprojectclient",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "test": "vitest --reporter verbose",
-    "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",

@@ -13,6 +13,7 @@ import { endsAt } from "../../../utils/endTest";
 import DateTime from "../../../components/modules/datetime";
 import Duration from "../../../components/modules/duration";
 import { Link } from "../../../components/elements/actions/links";
+import { NotFound } from "../../404";
 
 const TestDetail = () => {
 
@@ -148,16 +149,22 @@ const TestDetail = () => {
 
     return (
         <div className="test-detail flat-width-wrap">
-			<div className="test-detail-left">
-				<div className="test-detail-left-top">
-					{!isTestLoading && test? <TestDetailCard test={test.data}/>: JSON.stringify(error)}
-				</div>
-			</div>
-			<div className="test-detail-right">
-				{ !isTestLoading && test && test.data.isTestAvailable && <RegisterCard/>}
-				{ !isTestLoading && test && test.data.isTestOnline && <PlayCard/>}
-				{ !isTestLoading && test && test.data.isTestOffline && <ResultCard/>}
-			</div>
+			{ !isTestLoading && test ? (
+				<>
+					<div className="test-detail-left">
+						<div className="test-detail-left-top">
+							<TestDetailCard test={test.data}/>
+						</div>
+					</div>
+					<div className="test-detail-right">
+						{ test.data.isTestAvailable && <RegisterCard/>}
+						{ test.data.isTestOnline && <PlayCard/>}
+						{ test.data.isTestOffline && <ResultCard/>}
+					</div>
+				</>
+			): (
+				<NotFound/>
+			)}
         </div>
     )
 }

@@ -7,12 +7,16 @@ import Tabs from "../../components/layouts/tabs";
 const Test = () => {
 
     const [ tab, setTab ] = useState<number>(0);
-    const labels = ["available","online", "offline", "all"];
+    const filters = ["available","online", "offline"];
+    const labels = ["Upcoming", "Online Now", "Past"];
 	const { data, error, isLoading, isError } = useGetAllTestsQuery({
-        filter: labels[tab]
+        filter: filters[tab]
     });
 
     const TestAll = ():JSX.Element => {
+        if(isLoading) return (
+            <div className="test-all-body">Loading Tests</div>
+        )
         if(!isLoading && data) {
             if(data.length === 0) return (
                 <div className="test-all-body">No Test {labels[tab]}</div>
@@ -41,7 +45,7 @@ const Test = () => {
     return (
         <div className="mock-test-pages-root flat-width-wrap">
             <Tabs labels={labels} state={tab} setState={setTab}>
-                { [<TestAll key="all"/>, <TestAvailable key="available"/>, <TestOnline key="online"/>,<TestOffline key="offline"/>] }
+                { [<TestAvailable key="available"/>, <TestOnline key="online"/>,<TestOffline key="offline"/>] }
             </Tabs>
         </div>
     )

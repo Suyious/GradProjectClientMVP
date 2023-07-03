@@ -8,12 +8,13 @@
     top: 4em;
     left: 0;
     background: var(--background-primary); 
-    padding-inline: 1em;
 }
 
 .tabs-navigation-tab-label {
     padding: 0.5em 2em;
     cursor: pointer;
+    text-transform: capitalize;
+    user-select: none;
 }
 
 .tabs-navigation-tab-label.select {

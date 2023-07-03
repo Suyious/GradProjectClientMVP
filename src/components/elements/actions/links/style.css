@@ -1,4 +1,6 @@
 .link-strip{
     text-decoration: none;
     color: inherit;
+    text-align: center;
+    cursor: pointer;
 }
