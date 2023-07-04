@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useCreateNewTestMutation } from "../../../../app/services/api/mocktestApi";
 import { useNavigate } from "react-router-dom";
 import TrashIcon from "../../../../assets/icons/trash";
+import Modal from "../../../layouts/modal";
 
 type AddQuestionsPanelProps = {
     test: Test | {},
@@ -148,10 +149,10 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
         }))
     }
 
-    const [ createNewTest, { isLoading }] = useCreateNewTestMutation();
+    const [ createNewTest, { isLoading }] = useCreateNewTestMutation(); 
 	const navigate = useNavigate()
 
-    async function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+    async function onSubmit() {
         if("questions" in test) {
             if(test.questions.length === 0) return;
             for(let i = 0; i < test.questions.length; i++){
@@ -175,6 +176,8 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                 })
         }
     }
+
+    const [ popUpOpen, setPopUpOpen ] = useState<boolean>(false);
 
     return (
         <div className="add_question_panel_body flat-width-wrap">
@@ -297,7 +300,10 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                         </div>
                     </div>
                 </div>
-                <Button className="add_question_submit_button" onClick={onSubmit}>Submit</Button>
+                <div className="add_question_panel_right_bottom">
+                    { popUpOpen && <Modal.PopUp message="Do you want to Submit your Test?" bottom="3em" onCancel={() => setPopUpOpen(false)} onConfirm={onSubmit}/> }
+                    <Button disabled={!("questions" in test)} className="add_question_submit_button" onClick={() => setPopUpOpen(true)}>Submit</Button>
+                </div>
             </div>
         </div>
     )

@@ -1,17 +1,9 @@
 import Card from "./card";
 import Flex from "./flex"
 
-type ContainerProps = {
-    children: React.ReactNode,
-}
-
-const Container = ({children}: ContainerProps) => {
-    return (
-        <>{children}</>
-    )
-}
-
-Container.Flex = Flex;
-Container.Card = Card
+const Container = {
+    Flex,
+    Card
+};
 
 export default Container;

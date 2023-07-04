@@ -10,6 +10,7 @@ import { useGetUserQuery } from "../../../../app/services/api/authApi";
 import { Button } from "../../../../components/elements/actions/buttons";
 import { Response } from "../../../../types/response";
 import { Link } from "../../../../components/elements/actions/links";
+import Modal from "../../../../components/layouts/modal";
 
 const TestPlay = () => {
 
@@ -140,6 +141,9 @@ const TestPlay = () => {
     }
 
     const TestPlayInterface = () => {
+
+        const [ popUpOpen, setPopUpOpen ] = useState<boolean>(false);
+
         return (
             <>
                 <div className="test-play-left">
@@ -179,7 +183,8 @@ const TestPlay = () => {
                         )}
                     </div>
                     <div className="test-play-right-bottom">
-                        <Button onClick={onSubmit}>Submit</Button>
+                        { popUpOpen && <Modal.PopUp message="Do you want to Submit your Test?" bottom="3em" onCancel={() => setPopUpOpen(false)} onConfirm={onSubmit}/> }
+                        <Button onClick={() => setPopUpOpen(true)}>Submit</Button>
                     </div>
                 </div>
             </>

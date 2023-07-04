@@ -15,7 +15,11 @@ const Test = () => {
 
     const TestAll = ():JSX.Element => {
         if(isLoading) return (
-            <div className="test-all-body">Loading Tests</div>
+            <div className="test-all-body">
+                <div className="test-all-loading">
+                    Loading Tests ...
+                </div>
+            </div>
         )
         if(!isLoading && data) {
             if(data.length === 0) return (

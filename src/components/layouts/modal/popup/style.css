@@ -1,0 +1,13 @@
+.modal-body {
+    background: var(--background-primary);
+    padding: 1em 2em;
+    box-shadow: var(--shadow-primary);
+    border-radius: 4px;
+    border: var(--card-border-primary);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1em;
+    margin-top: 1em;
+}

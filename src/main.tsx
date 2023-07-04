@@ -26,10 +26,13 @@ const router = createBrowserRouter([
 		children: [
 			{ path: "/", element: <Home/>, },
 			{ path: "test/", element: <Test/>},
-			{ path: "test/create/", element: <TestCreate/>},
 			{ path: "test/join/", element: <TestJoin/>},
 		   	{ path: "test/:id/", element: <TestDetail/> },
 		]
+	},{
+		path: "test/create/",
+		element: <TestCreate/>,
+		errorElement: <Error404/>,
 	},{
 		path: "user/",
 		element: <User/>,

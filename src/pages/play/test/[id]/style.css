@@ -94,6 +94,10 @@
     flex: 1;
 }
 
+.test-play-right-bottom {
+    position: relative;
+}
+
 .test-play-right-bottom button {
     width: 100%;
 }

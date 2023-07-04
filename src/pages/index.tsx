@@ -2,8 +2,16 @@ import { Navigate } from 'react-router-dom'
 import { useGetUserQuery } from '../app/services/api/authApi'
 
 const LoadingComponenet = () => {
+
+	const styles:React.CSSProperties = {
+		minHeight: "100vh",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
+	}
+
 	return (
-		<div className="loading-skeleton-body" style={{ marginTop: "5em" }}>Loaderload</div>
+		<div className="loading-skeleton-body width-wrap" style={styles}>Loading Tests...</div>
 	)
 }
 
