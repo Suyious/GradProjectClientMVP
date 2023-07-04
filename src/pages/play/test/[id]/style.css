@@ -101,6 +101,7 @@
 .test-play-questions-icons {
     display: flex;
     gap: 0.5em;
+    flex-wrap: wrap;
 }
 
 .test-play-question-icon {

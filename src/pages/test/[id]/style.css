@@ -13,7 +13,7 @@
 
 @media screen and (min-width: 600px) {
     .test-detail-left {
-        width: 70%;
+        width: 60%;
     }
 }
 
@@ -59,9 +59,10 @@
 .test-detail-register-head,
 .test-detail-play-head,
 .test-detail-results-head {
-    text-align: center;
     width: 100%;
-    border-bottom: 1px solid #000;
+    text-transform: capitalize;
+    font-size: 1.2em;
+    font-weight: 700;
 }
 
 .test-detail-play-subtitle {
@@ -83,6 +84,10 @@
     max-width: 100%;
 }
 
+.test-detail-results {
+  width: 100%;
+}
+
 .test-detail-results-row {
     display: flex;
 }
@@ -93,6 +98,10 @@
 
 .test-detail-results-col {
     flex: 1;
+}
+
+.test-detail-results-col.user {
+    flex: 2;
 }
 
 .test-detail-countdown {

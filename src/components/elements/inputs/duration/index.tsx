@@ -22,7 +22,7 @@ const DurationInput = ({ label, error, state, setState}: DurationInputProps) => 
                 <div className="duration_input_error">{error}</div>
             </div>
             <div className="duration_input_main">
-                <input placeholder="HH" type="number" min={1} max={24} className="duration_input_hours"
+                <input placeholder="HH" type="number" min={0} max={24} className="duration_input_hours"
                     value={state.hours} onChange={(e) => setState((p) => ({...p, hours: e.target.value}))}/>
                 <input placeholder="MM" type="number" min={0} max={59} className="duration_input_minutes"
                     value={state.minutes} onChange={(e) => setState((p) => ({...p, minutes: e.target.value}))}/>
