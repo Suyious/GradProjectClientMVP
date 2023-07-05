@@ -11,7 +11,6 @@ function App(): JSX.Element {
 	const user = useAppSelector(selectUser);
 	const dispatch = useAppDispatch()
 	const { data, isLoading, isError } = useGetUserQuery()
-
 	useEffect(() => {
 		if(data && !isError) dispatch(setAuthStateUser(data))
 	}, [data])

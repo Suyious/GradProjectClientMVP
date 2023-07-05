@@ -117,12 +117,10 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
         setPage(serial);
         setErrors(undefined);
     }
-    
     function pageNext() {
         setPage(p => p + 1)
         setErrors(undefined);
     }
-
     function pagePrevious() {
         setPage(p => p - 1)
         setErrors(undefined);
@@ -163,7 +161,7 @@ const AddQuestionsPanel = ({ test, setTest, page, setPage }: AddQuestionsPanelPr
                     return;
                 }
             }
-            console.log("ready to submit");
+           console.log("ready to submit");
             await createNewTest(test)
                 .unwrap().then(() => {
                     navigate("/");

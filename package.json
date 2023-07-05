@@ -17,18 +17,11 @@
     "react-router-dom": "^6.8.1"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/react-redux": "^7.1.25",
     "@vitejs/plugin-react": "^3.1.0",
-    "@vitest/coverage-c8": "^0.29.1",
-    "@vitest/ui": "^0.29.1",
-    "jsdom": "^21.1.0",
     "typescript": "^4.9.3",
-    "vite": "^4.1.0",
-    "vitest": "^0.29.1"
+    "vite": "^4.1.0"
   }
 }
