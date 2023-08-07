@@ -6,13 +6,14 @@ The Project tited Mock Test Conducting System is a web-based platform designed t
 
 The Platform consists of two part:
 - the Front-end facing Client application, and
-- the Back-end facing REST API server 
+- the [Back-end facing REST API server](https://github.com/suyious/GradProjectServerMVP/)
 that communicate with each other to form the complete Mock Test Conducting System.
 
-The Front-end Client is developed using popular modern Javascript framework React and the backend REST API would be developed using popular Python web framework Django. The REST API allows for efflicient communication between the frontend application and the backend application.
+The Front-end Client is developed using popular modern Javascript framework React. The REST API allows for efflicient communication between the frontend application and the backend application.
+
 The application has been hosted online on a free tier server. The site can be accessed at:
 
-<h3 style="text-align: center"><a href="https://bcsp064.netlify.app">bcsp064.netlify.app</a></h3>
+<h3 style="text-align: center"> Visit <a href="https://bcsp064.netlify.app">bcsp064.netlify.app</a></h3>
 
 > The server has a 30 seconds wake-up time limitation due to which the users may have to wait for at least half a minute for the server to come online. The user will be met with a loading screen in such cases.
 
